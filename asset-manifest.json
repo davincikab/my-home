@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/davincikab/.github.io/my-home/static/css/main.0687bc98.chunk.css",
-    "main.js": "/davincikab/.github.io/my-home/static/js/main.b83fa568.chunk.js",
-    "main.js.map": "/davincikab/.github.io/my-home/static/js/main.b83fa568.chunk.js.map",
-    "runtime-main.js": "/davincikab/.github.io/my-home/static/js/runtime-main.a2753086.js",
-    "runtime-main.js.map": "/davincikab/.github.io/my-home/static/js/runtime-main.a2753086.js.map",
-    "static/js/2.f74c87aa.chunk.js": "/davincikab/.github.io/my-home/static/js/2.f74c87aa.chunk.js",
-    "static/js/2.f74c87aa.chunk.js.map": "/davincikab/.github.io/my-home/static/js/2.f74c87aa.chunk.js.map",
-    "index.html": "/davincikab/.github.io/my-home/index.html",
-    "precache-manifest.cad495a50df024c5d9983452171fe946.js": "/davincikab/.github.io/my-home/precache-manifest.cad495a50df024c5d9983452171fe946.js",
-    "service-worker.js": "/davincikab/.github.io/my-home/service-worker.js",
-    "static/css/main.0687bc98.chunk.css.map": "/davincikab/.github.io/my-home/static/css/main.0687bc98.chunk.css.map",
-    "static/js/2.f74c87aa.chunk.js.LICENSE.txt": "/davincikab/.github.io/my-home/static/js/2.f74c87aa.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/davincikab/.github.io/my-home/static/media/logo.5d5d9eef.svg"
+    "main.css": "/my-home/static/css/main.0687bc98.chunk.css",
+    "main.js": "/my-home/static/js/main.54fb7cf2.chunk.js",
+    "main.js.map": "/my-home/static/js/main.54fb7cf2.chunk.js.map",
+    "runtime-main.js": "/my-home/static/js/runtime-main.b57a1af9.js",
+    "runtime-main.js.map": "/my-home/static/js/runtime-main.b57a1af9.js.map",
+    "static/js/2.f74c87aa.chunk.js": "/my-home/static/js/2.f74c87aa.chunk.js",
+    "static/js/2.f74c87aa.chunk.js.map": "/my-home/static/js/2.f74c87aa.chunk.js.map",
+    "index.html": "/my-home/index.html",
+    "precache-manifest.e381251b6e6ef85f3f2325c8d091b3e6.js": "/my-home/precache-manifest.e381251b6e6ef85f3f2325c8d091b3e6.js",
+    "service-worker.js": "/my-home/service-worker.js",
+    "static/css/main.0687bc98.chunk.css.map": "/my-home/static/css/main.0687bc98.chunk.css.map",
+    "static/js/2.f74c87aa.chunk.js.LICENSE.txt": "/my-home/static/js/2.f74c87aa.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/my-home/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a2753086.js",
+    "static/js/runtime-main.b57a1af9.js",
     "static/js/2.f74c87aa.chunk.js",
     "static/css/main.0687bc98.chunk.css",
-    "static/js/main.b83fa568.chunk.js"
+    "static/js/main.54fb7cf2.chunk.js"
   ]
 }
