@@ -1,10 +1,27 @@
 @import "../../index.css";
 
 .main-page {
-    background-color: var(--gray);
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+}
+
+.landing {
     display: flex; 
     align-items: center;
     justify-content: center;
+    height: 80vh;
+    background-color: var(--gray);
+}
+
+.main-page .section {
+    margin: 1.5em 0em;
+}
+
+.section .title-text {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+@media (min-width:50em) {
+    
 }

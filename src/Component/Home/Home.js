@@ -10,7 +10,21 @@ function Home (props) {
 
     return (
         <div className="main-page">
-            <Button text="My Home" onClick={clickHandler} className="btn custom-btn"/>
+            <div className="landing">
+                <Button text="My Home" onClick={clickHandler} className="btn custom-btn"/>
+            </div>
+
+            <div className="section">
+                <h5 className="title-text">TESTIMONIALs</h5>
+            </div>
+
+            <div className="section">
+                <h5 className="title-text">TESTIMONIALs</h5>
+            </div>
+
+            <div className="section">
+                <h5 className="title-text">CONTATCTs</h5>
+            </div>
         </div>
     );
 }

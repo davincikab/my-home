@@ -1,11 +1,11 @@
 import React from "react";
 
-function Map(props) {
+function About(props) {
     return (
         <div>
-            Map
+            About
         </div>
     );
 }
 
-export default Map;
+export default About;
