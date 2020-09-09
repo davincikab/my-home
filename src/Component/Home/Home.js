@@ -3,6 +3,7 @@ import './Home.css';
 
 import Button from '../Button/Button';
 import Footer from  '../Footer/Footer';
+import Card from '../Card/Card';
 
 function Home (props) {
     const clickHandler = () => {
@@ -17,14 +18,20 @@ function Home (props) {
 
             <div className="section">
                 <h5 className="title-text">TESTIMONIAL</h5>
+               
             </div>
 
             <div className="section">
                 <h5 className="title-text">TESTIMONIAL</h5>
+                <div className="section_inner">
+                    <Card />
+                    <Card />
+                    <Card />
+                </div>
             </div>
 
             <div className="section">
-                <h5 className="title-text">CONTATCT</h5>
+                <h5 className="title-text">CONTACT</h5>
             </div>
 
             <Footer />

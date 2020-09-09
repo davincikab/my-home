@@ -1,0 +1,39 @@
+.card {
+    padding:0em;
+    border-radius:0.6em;
+}
+
+.card-title {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 900;
+}
+
+.card-body {
+    background-color: var(--white);
+    box-shadow: 1px 1px 0.2em var(--light-gray);
+    padding: 1.5em 0.5em;
+    border-radius: 0.6em;
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -1.5em;
+}
+
+.card-footer p {
+    margin:0;
+}
+
+.img {
+    height:50px;
+    width: 50px;
+    object-fit: cover;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
