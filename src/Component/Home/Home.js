@@ -2,6 +2,7 @@ import React from 'react';
 import './Home.css';
 
 import Button from '../Button/Button';
+import Footer from  '../Footer/Footer';
 
 function Home (props) {
     const clickHandler = () => {
@@ -15,16 +16,18 @@ function Home (props) {
             </div>
 
             <div className="section">
-                <h5 className="title-text">TESTIMONIALs</h5>
+                <h5 className="title-text">TESTIMONIAL</h5>
             </div>
 
             <div className="section">
-                <h5 className="title-text">TESTIMONIALs</h5>
+                <h5 className="title-text">TESTIMONIAL</h5>
             </div>
 
             <div className="section">
-                <h5 className="title-text">CONTATCTs</h5>
+                <h5 className="title-text">CONTATCT</h5>
             </div>
+
+            <Footer />
         </div>
     );
 }
