@@ -9,8 +9,8 @@ import {
 } from "react-router-dom";
 
 import Home from './Component/Home/Home';
-import Map from './Component/Map/Map';
 import About from './Component/About/About';
+import MapContainer from './Component/Map/Map';
 
 function App() {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -73,7 +73,7 @@ function App() {
             <About />
           </Route>
           <Route path="/map">
-            <Map />
+            <MapContainer />
           </Route>
           <Route path="/">
             <Home />
