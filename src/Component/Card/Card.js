@@ -12,7 +12,7 @@ function Card(props) {
                 That blurry edge is being cropped and now creates the illusion of an inset shadow. 
             </div>
             <div className="card-footer">
-                <img src={require("../../assets/images/children.jpg")} className="img img-circle" />
+                <img src={require("../../assets/images/children.jpg")} className="img img-circle" alt="children"/>
                 <p className="text">Harris Porter</p>
             </div>
         </div>
