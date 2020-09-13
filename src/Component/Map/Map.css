@@ -1,0 +1,68 @@
+.container {
+    position: relative;
+}
+
+.mapboxgl-popup .mapboxgl-popup-content {
+    padding:0;
+    border-radius: 1em;
+    overflow: hidden;
+    width: 200px;
+}
+
+.popup-content {
+    padding: 0;
+}
+
+.popup-content .popup-title {
+    margin: 0em;
+    font-size: 1.4em;
+    background-color: var(--primary);
+    text-align: center;
+    padding: 0.3em;
+    color: var(--white);
+}
+
+.popup-content .popup-body {
+    padding:0.2em 0.8em;
+}
+
+.popup-body p {
+    margin: 0.3em;
+    line-height: 1.5;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.filter-tab {
+    position: absolute;
+    top: 2%;
+    left: 1%;
+    background-color: var(--white);
+    padding: 0.3em 0.2em;
+    height: 70vh;
+    width: 360px;
+    box-shadow: 2px 2px 0.4em var(--light-gray);
+}
+
+.section-title {
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0.4em;
+}
+
+.visual-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter {
+    border:2px solid var(--light-teal);
+    border-radius: 1em;
+    padding: 0.2em;
+    margin: 0.2em;
+}
+
+.form-group input, .form-group select {
+    width: 90%;
+}
