@@ -9,7 +9,7 @@ const FilterTab = ({onVisualTypeChange}) => {
 
     const handleVisualizeByChange = (event) => {
         console.log(event.target.value);
-        onVisualTypeChange("cirle", event.target.value);
+        onVisualTypeChange("circle", event.target.value);
     }
 
     const handFilterChange = (event) => {
@@ -27,7 +27,7 @@ const FilterTab = ({onVisualTypeChange}) => {
                         id="population"
                         name="filter"
                         type="radio"
-                        value="population"
+                        value="Population"
                         onChange={handleVisualizeByChange}
                     >
                     Population
@@ -56,7 +56,7 @@ const FilterTab = ({onVisualTypeChange}) => {
                         id="bed"
                         name="filter"
                         type="radio"
-                        value="bed"
+                        value="beds"
                         onChange={handleVisualizeByChange}
                     >
                         Bed

@@ -82,6 +82,7 @@ li a {
     justify-content: space-around;
     margin: auto;
     padding: 0;
+    z-index: 1;
   }
 
   .navbar-toggler {

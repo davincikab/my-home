@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import ReactMapboxGl, { Layer, Feature, Popup } from 'react-mapbox-gl';
+import ReactMapboxGl, {Source, Layer, Feature, Popup } from 'react-mapbox-gl';
 
 // firebase
 import {withFirebase } from '../Firebase';
@@ -19,25 +19,30 @@ function MapComponent(props) {
     const [zoom, setZoom] = useState(10);
     const [center, setCenter] = useState([34.9321088,-0.6299662865]);
     const [visualType, setVisualType] = useState('symbol');
+    const [visualField, setVisualField] = useState("");
 
     useEffect(() =>{
         // get the data from firebase
         props.firebase.homes().on("value", snapshot => {
             // update homes data
-            setHomes(snapshot.val().features);
-        })
+            setHomes(snapshot.val());
+        });
     }, [props.firebase]);
 
     // update visual type
     const handleVisualTypeChange = (type, field) => {
+
+        console.log(homes);
+
         setVisualType(type);
+        setVisualField(field);
     } 
 
     // load missing images
     const onStyleImageMissing = (map) => {
         // add images
         if(!map.hasImage("home")) {
-            map.loadImage(require('../../assets/images/home.png'), function(error, image) {
+            map.loadImage(require('../../assets/images/location.png'), function(error, image) {
                 if (error) {
                     console.log(error);
                     return;
@@ -58,7 +63,7 @@ function MapComponent(props) {
             // get the clicked layer
             let feature = features[0];
 
-            let activeHome = homes.find(hme => hme.properties.id === feature.properties.id);
+            let activeHome = homes.features.find(hme => hme.properties.id === feature.properties.id);
             setPopupData(activeHome);
         } else {
             setPopupData({});
@@ -69,12 +74,14 @@ function MapComponent(props) {
         
     }
 
-    const onFeatureClick = (event, home) => {
+    const onFeatureEnter = (event) => {
         // update the popupdata
-        setPopupData(home);
-        event.originalEvent.stopPropagation();
+        event.target.getCanvas().style.cursor = "pointer";
+    }
 
-        console.log(event);
+    const onFeatureLeave = (event) => {
+        // update the popupdata
+        event.target.getCanvas().style.cursor = "";
     }
 
     return (
@@ -90,19 +97,50 @@ function MapComponent(props) {
             onStyleImageMissing={onStyleImageMissing}
             onClick={onMapClick}
             >
+            {
+                 homes.type &&
+                 <Source id="home-source" geoJsonSource={{
+                     type:"geojson",
+                     data:homes
+                 }} />
+            }
             
+            {  
+                visualType === "symbol" && homes.type &&
+                <Layer 
+                    type="symbol" 
+                    id="homes" 
+                    layout={{ 'icon-image': "home"}}
+                    sourceId="home-source"
+                    onMouseEnter={onFeatureEnter}
+                    onMouseLeave={onFeatureLeave}
+                >
+                </Layer>
+            }
+
             {   
-                homes[0] &&
-                <Layer type="symbol" id="homes" layout={{ 'icon-image': "home"}}>
-                  {
-                    homes.map(home => (
-                        <Feature 
-                            key={home.properties.id} 
-                            coordinates={home.geometry.coordinates} 
-                            onClick={e => onFeatureClick(e, home)}
-                        />
-                    ))
-                  }
+                visualField &&
+                <Layer 
+                    type="circle" 
+                    id="homes" 
+                    sourceId="home-source"
+                    layout={{ 
+                        "visibility":"visible"
+                    }}
+                    paint={{
+                        'circle-radius':[
+                            'interpolate',
+                            ['linear'],
+                            ['get', visualField],
+                            10,
+                            5,
+                            200,
+                            20
+                        ],
+                        'circle-color':"#E5573D",
+                        'circle-opacity':0.75
+                    }}
+                >
                 </Layer>
             }
 
@@ -127,10 +165,13 @@ function MapComponent(props) {
            
             </Map>
 
-            {/* filter tab */}
-            <FilterTab 
+            {
+                homes.type &&
+                <FilterTab 
                 onVisualTypeChange={handleVisualTypeChange}
             />
+            }
+            
         </div>
     );
 }
