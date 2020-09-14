@@ -11,8 +11,9 @@
 .navbar {
   margin: 0 0 -18px;
   background-color: teal;
-  padding: 0em;
+  padding: 0.5em 0;
   display: block;
+  position: relative;
 }
 
 .navbar-brand {
@@ -25,7 +26,7 @@
 
 .navbar-toggler {
   position: absolute;
-  top: 0.5%;
+  top: 30%;
   right:2%;
   display: flex;
   flex-direction: column;
@@ -58,6 +59,10 @@
   height: 0;
   transition: height 0.6s ease-in-out;
   overflow: hidden;
+  height: 114px;
+  top: 35px;
+  background-color: var(--primary);
+  position: absolute;
 }
 
 .navbar-nav li {
@@ -76,6 +81,7 @@ li a {
     align-items: center;
     justify-content: space-around;
     margin: auto;
+    padding: 0;
   }
 
   .navbar-toggler {
@@ -87,6 +93,8 @@ li a {
     display: flex;
     justify-content: flex-start;
     height: auto !important;
+    position: initial;
+    background-color: inherit;
   }
 
   .navbar-nav li {

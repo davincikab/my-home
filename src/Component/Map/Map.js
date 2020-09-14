@@ -5,6 +5,8 @@ import ReactMapboxGl, { Layer, Feature, Popup } from 'react-mapbox-gl';
 import {withFirebase } from '../Firebase';
 import './Map.css';
 
+import FilterTab from "../FilterSection";
+
 // access token
 const Map = ReactMapboxGl({
     accessToken:
@@ -16,6 +18,7 @@ function MapComponent(props) {
     const [popupData, setPopupData] = useState({});
     const [zoom, setZoom] = useState(10);
     const [center, setCenter] = useState([34.9321088,-0.6299662865]);
+    const [visualType, setVisualType] = useState('symbol');
 
     useEffect(() =>{
         // get the data from firebase
@@ -25,7 +28,13 @@ function MapComponent(props) {
         })
     }, [props.firebase]);
 
-    const onStyleImageMissing = (map, e) => {
+    // update visual type
+    const handleVisualTypeChange = (type, field) => {
+        setVisualType(type);
+    } 
+
+    // load missing images
+    const onStyleImageMissing = (map) => {
         // add images
         if(!map.hasImage("home")) {
             map.loadImage(require('../../assets/images/home.png'), function(error, image) {
@@ -49,7 +58,7 @@ function MapComponent(props) {
             // get the clicked layer
             let feature = features[0];
 
-            let activeHome = homes.find(hme => hme.properties.id == feature.properties.id);
+            let activeHome = homes.find(hme => hme.properties.id === feature.properties.id);
             setPopupData(activeHome);
         } else {
             setPopupData({});
@@ -119,85 +128,15 @@ function MapComponent(props) {
             </Map>
 
             {/* filter tab */}
-            <div className="filter-tab">
-                <div className="section">
-                    <h5 className="section-title">Visualise By</h5>
-
-                    {/*  */}
-                    <div className="visual-section">
-                        <label htmlFor="population" className="filter">
-                            <input 
-                                type="radio"    
-                            /> Population
-                        </label>
-
-                        <label htmlFor="population" className="filter">
-                            <input 
-                                type="radio"    
-                            />Females
-                        </label>
-
-                        <label htmlFor="population" className="filter">
-                            <input 
-                                type="radio"    
-                            /> Male
-                        </label>
-
-                        <label htmlFor="population" className="filter">
-                            <input 
-                                type="radio"    
-                            /> Beds
-                        </label> 
-
-                        <label htmlFor="population" className="filter">
-                            <input 
-                                type="radio"    
-                            /> Population
-                        </label>         
-                    </div>
-                </div>
-                <div className="section">
-                    <h5 className="section-title">Filter</h5>
-                    <div className="filter-section">
-                        <div className="form-group">
-                            <label>Beds</label>
-                            <input type="range" />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Male</label>
-                            <input type="range" />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Population</label>
-                            <input type="range" />
-                        </div>
-
-                        <div className="form-group">
-                            <label>Age Sets</label>
-                            <select className="form-control">
-                                <option name="">10 - 22</option>
-                                <option name="">10 - 22</option>
-                                <option name="">10 - 22</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <FilterTab 
+                onVisualTypeChange={handleVisualTypeChange}
+            />
         </div>
     );
 }
 
-const CreateFeatures = (props) => {
-    console.log(props);
-    console.log("Createing");
-    return 
-        props.data.map(home => (
-            <Feature key={home.properties.id} coordinates={home.geometry.coordinates} />
-        ))
-    
-}
+
+// popup component
 
 const MapContainer = withFirebase(MapComponent);
 export default MapContainer;

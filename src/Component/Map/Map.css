@@ -33,36 +33,3 @@
     display: flex;
     justify-content: space-between;
 }
-
-.filter-tab {
-    position: absolute;
-    top: 2%;
-    left: 1%;
-    background-color: var(--white);
-    padding: 0.3em 0.2em;
-    height: 70vh;
-    width: 360px;
-    box-shadow: 2px 2px 0.4em var(--light-gray);
-}
-
-.section-title {
-    text-transform: uppercase;
-    text-align: center;
-    margin: 0.4em;
-}
-
-.visual-section {
-    display: flex;
-    flex-direction: column;
-}
-
-.filter {
-    border:2px solid var(--light-teal);
-    border-radius: 1em;
-    padding: 0.2em;
-    margin: 0.2em;
-}
-
-.form-group input, .form-group select {
-    width: 90%;
-}

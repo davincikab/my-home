@@ -15,16 +15,16 @@ function App() {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const navbarRef = useRef(null);
   const [height, setHeight] = useState(0);
-  const device = window.innerWidth;
+  const deviceWidth = window.innerWidth;
 
   useEffect(() =>{
-    if(device < 12) {
+    if(deviceWidth < 12) {
       setIsCollapsed(true);
     }
 
     // update height
    setHeight(navbarRef.current.scrollHeight);
-  }, []);
+  }, [deviceWidth]);
 
   const toggleNavLinks = () => {
     setIsCollapsed(!isCollapsed);
@@ -51,7 +51,7 @@ function App() {
             ref={navbarRef}
             className="navbar-nav"
             style={{
-              "height": isCollapsed ? "0px" : height +"px"
+              height: isCollapsed ? "0px" : height +"px"
             }}
           >
             <li  onClick={toggleActiveTab}>
@@ -62,6 +62,9 @@ function App() {
             </li>
             <li onClick={toggleActiveTab}>
               <Link to="/about" >About</Link>
+            </li>
+            <li onClick={toggleActiveTab}>
+              <Link to="/about" >Donate</Link>
             </li>
           </ul>
         </nav>
