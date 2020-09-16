@@ -15,20 +15,36 @@ const Map = ReactMapboxGl({
 
 function MapComponent(props) {
     const [homes, setHomes] = useState([]);
+    const [data, setData] = useState(null);
     const [popupData, setPopupData] = useState({});
     const [zoom, setZoom] = useState(10);
     const [center, setCenter] = useState([34.9321088,-0.6299662865]);
     const [visualType, setVisualType] = useState('symbol');
     const [visualField, setVisualField] = useState("");
 
-    useEffect(() =>{
+    useEffect(() => {
         // get the data from firebase
         props.firebase.homes().on("value", snapshot => {
             // update homes data
             setHomes(snapshot.val());
+            setData(snapshot.val());
         });
     }, [props.firebase]);
 
+    // filter homes with a given population
+    const filterPopulation = (value) => {
+        let filterHomes = JSON.parse(JSON.stringify(data));
+
+        filterHomes.features = filterHomes.features.filter(home => home.properties.Population < value);
+        setHomes(filterHomes);
+    }
+
+    const filterBeds = (value) => {
+        let filterHomes = JSON.parse(JSON.stringify(data));
+
+        filterHomes.features = filterHomes.features.filter(home => home.properties.beds < value);
+        setHomes(filterHomes);
+    }
     // update visual type
     const handleVisualTypeChange = (type, field) => {
 
@@ -140,6 +156,8 @@ function MapComponent(props) {
                         'circle-color':"#E5573D",
                         'circle-opacity':0.75
                     }}
+                    onMouseEnter={onFeatureEnter}
+                    onMouseLeave={onFeatureLeave}
                 >
                 </Layer>
             }
@@ -169,6 +187,8 @@ function MapComponent(props) {
                 homes.type &&
                 <FilterTab 
                 onVisualTypeChange={handleVisualTypeChange}
+                filterPopulation={filterPopulation}
+                filterBeds={filterBeds}
             />
             }
             

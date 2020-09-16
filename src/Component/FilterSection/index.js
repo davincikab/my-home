@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RadioButton from '../RadioButtonControl';
-import FormControl from '../FormControl';
+import FormGroup from '../FormGroup';
 
 import './FilterSection.css';
 
-const FilterTab = ({onVisualTypeChange}) => {
+const FilterTab = ({onVisualTypeChange,filterPopulation, filterBeds}) => {
     // application state;
+    const [population, setPopulation] = useState(50);
+    const [beds, setBeds] = useState(40);
 
     const handleVisualizeByChange = (event) => {
         console.log(event.target.value);
         onVisualTypeChange("circle", event.target.value);
     }
 
-    const handFilterChange = (event) => {
-        console.log(event);
+    const handleFilterChange = (event) => {
+        let target = event.target;
+
+       if(target.name == "population") {
+            filterPopulation(target.value);
+            setPopulation(target.value);
+       } else {
+            filterBeds(target.value);
+            setBeds(target.value);
+       } 
     }
 
     return (
@@ -66,29 +76,25 @@ const FilterTab = ({onVisualTypeChange}) => {
             <div className="section">
                 <h5 className="section-title">Filter</h5>
                 <div className="filter-section">
-                    <div className="form-group">
-                        <label>Beds</label>
-                        <input type="range" />
-                    </div>
+                    <FormGroup
+                        id="bed-filter"
+                        name="bed"
+                        type="range"
+                        value={beds}
+                        onChange={handleFilterChange}
+                    >
+                        Beds
+                    </FormGroup>
 
-                    <div className="form-group">
-                        <label>Male</label>
-                        <input type="range" />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Population</label>
-                        <input type="range" />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Age Sets</label>
-                        <select className="form-control">
-                            <option name="">10 - 22</option>
-                            <option name="">10 - 22</option>
-                            <option name="">10 - 22</option>
-                        </select>
-                    </div>
+                    <FormGroup
+                        id="population-filter"
+                        name="population"
+                        type="range"
+                        value={population}
+                        onChange={handleFilterChange}
+                    >
+                        Population
+                    </FormGroup>
                 </div>
             </div>
         </div>

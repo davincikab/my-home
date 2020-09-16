@@ -3,4 +3,24 @@
     border-radius: 1em;
     padding: 0.2em;
     margin: 0.2em;
+    position: relative;
+    background-color: var(--white);
+    background-clip: padding-box;
+}
+
+.filter::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    right: 0;
+    border-radius: inherit;
+    margin:-3px;
+    background-image: linear-gradient(45deg, rgb(224, 25, 11), orange);
+}
+
+.active{
+    background-image: linear-gradient(-5deg, teal, transparent);
 }

@@ -20,13 +20,6 @@
     flex-direction: column;
 }
 
-.filter {
-    border:2px solid var(--light-teal);
-    border-radius: 1em;
-    padding: 0.2em;
-    margin: 0.2em;
-}
-
 .form-group input, .form-group select {
     width: 90%;
 }
