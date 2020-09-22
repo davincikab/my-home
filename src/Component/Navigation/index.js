@@ -16,7 +16,7 @@ import {
   import SignUpPage from '../SignUp';
   import SignOutButton from '../SignOut';
 
-const Navigation = (props) => {
+const Navigation = ({authUser}) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
     const navbarRef = useRef(null);
     const [height, setHeight] = useState(0);
@@ -74,18 +74,10 @@ const Navigation = (props) => {
             <li onClick={toggleActiveTab}>
               <Link to="/about" >Donate</Link>
             </li>
-
-            <li onClick={toggleActiveTab}>
-              <Link to="/sign-in" >Sign In</Link>
-            </li>
-
-            <li onClick={toggleActiveTab}>
-              <Link to="/sign-up" >Sign Up</Link>
-            </li>
-
-            <li onClick={toggleActiveTab}>
-             <SignOutButton />
-            </li>
+            { authUser ? 
+                <NavigationAuth toggleActiveTab={toggleActiveTab}/> : 
+                <NavigationNonAuth toggleActiveTab={toggleActiveTab} /> 
+            }
 
           </ul>
         </nav>
@@ -113,5 +105,31 @@ const Navigation = (props) => {
       </div>
     )
 }
+
+// Aunthenicate
+const NavigationAuth = ({ toggleActiveTab }) => (
+    <>  
+        <li onClick={toggleActiveTab}>
+            <SignOutButton />
+        </li>
+
+        <li onClick={toggleActiveTab}>
+            <Link to="/about" >Account</Link>
+        </li>
+    </>
+);
+
+const NavigationNonAuth = ({ toggleActiveTab }) => (
+    <>
+        <li onClick={toggleActiveTab}>
+            <Link to="/sign-in" >Sign In</Link>
+        </li>
+
+        <li onClick={toggleActiveTab}>
+            <Link to="/sign-up" >Sign Up</Link>
+        </li>
+    </>
+);
+
 
 export default Navigation;

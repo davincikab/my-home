@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { withFirebase } from './Component/Firebase';
+
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -14,6 +16,29 @@ class App extends React.Component {
       authUser:null
     };
   }
+
+  componentDidMount() {
+    // this.listener = this.props.firebase.auth.onAuthStateChanged(
+    //   authUser => {
+    //     authUser ? this.setState({authUser}) : this.setState({authUser:null});
+      
+    //   }
+    // );
+
+    this.listener = this.props.firebase.auth.onAuthStateChanged(
+      authUser => {
+        authUser
+          ? this.setState({ authUser })
+          : this.setState({ authUser: null });
+      },
+    );
+
+  }
+
+  componentWillMount() {
+    // this.listener;
+  }
+
   render() {
     return (
       <Router>
@@ -24,4 +49,4 @@ class App extends React.Component {
   
 }
 
-export default App;
+export default withFirebase(App);
