@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { withFirebase } from './Component/Firebase';
+import { AuthContext, withAuthentication } from './Component/Session';
 
 import './App.css';
 import {
@@ -8,45 +9,13 @@ import {
 
 import Navigation from "./Component/Navigation";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state ={
-      authUser:null
-    };
-  }
-
-  componentDidMount() {
-    // this.listener = this.props.firebase.auth.onAuthStateChanged(
-    //   authUser => {
-    //     authUser ? this.setState({authUser}) : this.setState({authUser:null});
-      
-    //   }
-    // );
-
-    this.listener = this.props.firebase.auth.onAuthStateChanged(
-      authUser => {
-        authUser
-          ? this.setState({ authUser })
-          : this.setState({ authUser: null });
-      },
-    );
-
-  }
-
-  componentWillMount() {
-    // this.listener;
-  }
-
-  render() {
+const App = (props) => {
     return (
-      <Router>
-        <Navigation authUser={this.state.authUser}/>
-      </Router>
+        <Router >
+          <Navigation />
+        </Router>
     );
   }
-  
-}
 
-export default withFirebase(App);
+
+export default withAuthentication(App);
