@@ -1,11 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
 import "./Navigation.css";
  
 import * as ROUTES from '../../constants/routes';
-import SignUpPage from '../SignUp';
 
-export const Navigation = (props) => {
+import {
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
+  
+  import Home from '../Home';
+  import About from '../About';
+  import MapContainer from '../Map';
+  import SignInPage from '../SignIn';
+  import SignUpPage from '../SignUp';
+  import SignOutButton from '../SignOut';
+
+const Navigation = (props) => {
+    const [isCollapsed, setIsCollapsed] = useState(true);
+    const navbarRef = useRef(null);
+    const [height, setHeight] = useState(0);
+    const deviceWidth = window.innerWidth;
+  
+    useEffect(() =>{
+      if(deviceWidth < 12) {
+        setIsCollapsed(true);
+      }
+  
+      // update height
+     setHeight(navbarRef.current.scrollHeight);
+    }, [deviceWidth]);
+  
+    const toggleNavLinks = () => {
+      setIsCollapsed(!isCollapsed);
+    };
+  
+    const toggleActiveTab = (e) => {
+      console.log(e);
+      setIsCollapsed(true);
+    }
+
     return (
         <div className="nav">
         <nav className="navbar">
@@ -50,7 +84,7 @@ export const Navigation = (props) => {
             </li>
 
             <li onClick={toggleActiveTab}>
-              <Link to="/about" >Sign Out</Link>
+             <SignOutButton />
             </li>
 
           </ul>
@@ -68,7 +102,7 @@ export const Navigation = (props) => {
             <MapContainer />
           </Route>
           <Route path="/sign-in">
-            <SignInForm />
+            <SignInPage />
           </Route>
 
           <Route path="/sign-up">
@@ -79,3 +113,5 @@ export const Navigation = (props) => {
       </div>
     )
 }
+
+export default Navigation;

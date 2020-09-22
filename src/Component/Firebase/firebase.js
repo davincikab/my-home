@@ -30,7 +30,7 @@ class Firebase {
         return this.auth.signInWithEmailAndPassword(email, password);
     }
 
-    signOutUsers = () => {
+    signOut = () => {
         return this.auth.signOut();
     }
 

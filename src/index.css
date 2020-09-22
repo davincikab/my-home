@@ -27,6 +27,12 @@ code {
   padding: 0.9em 2em !important;
 }
 
+.btn-no-outline {
+  background-color: white;
+  border-color: transparent;
+  color: var(--light-teal);
+}
+
 /* utilities */
 .d-flex {
   display: flex;

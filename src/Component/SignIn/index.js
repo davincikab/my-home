@@ -1,64 +1,107 @@
 import React, { useState} from 'react';
 import FormGroup from '../FormGroup';
 
+import {compose} from 'recompose';
+import { withFirebase } from '../Firebase';
+import * as ROUTES from "../../constants/routes";
+
 import './SignIn.css';
 import Button from "../Button";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-const SignInForm = (props) => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+const INIIAL_STATE = {
+    email:"",
+    password:"",
+    error:null
+};
+
+class SignInForm extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {...INIIAL_STATE};
+    }
     
-    const handleSubmit = (e) => {
+    handleSubmit = (e) => {
         e.preventDefault();
+        const { email, password } = this.state;
+
+        // sign the user
+        this.props.firebase.signInWithEmailAndPassword(email, password)
+        .then(() => {
+            this.setState({...INIIAL_STATE});
+            this.props.history.push(ROUTES.MAP);
+        })
+        .catch(error => {
+            this.setState({error});
+        });
     }
 
-    const handleOnchage = (event) => {
+    handleOnchage = (event) => {
          let target = event.target;
+
+        this.setState({
+            [target.name]:target.value
+        });
     }
 
-    return (
-        <div className="form-wrapper">
-            <form onSubmit={handleSubmit} className="form">
-            <h3 className="title">Sign In</h3>
-                <FormGroup
-                    id="user-name"
-                    name="username"
-                    type="text"
-                    value={username}
-                    onChange={handleOnchage}
-                >
-                    Username
-                </FormGroup>
+    render() {
+        const {
+            email,
+            password,
+            error
+        } = this.state;
 
-                <FormGroup
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={handleOnchage}
-                >
-                    Username
-                </FormGroup>
+        const isInvalid = email === "" || password === "";
 
-                <div className="form-group d-flex content-center">
-                    <Button
-                        className="btn btn-lg btn-primary"
-                        text="Sign In"
-                        onClick={e => console.log(e)}
-                        type="submit"
-                    ></Button>
-                </div>
+        return (
+            <div className="form-wrapper">
+                <form onSubmit={this.handleSubmit} className="form" method="POST">
+                <h3 className="title">Sign In</h3>
+                    <FormGroup
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={email}
+                        onChange={this.handleOnchage}
+                    >
+                        Email
+                    </FormGroup>
 
-                <div className="form-group">
-                    <small className="text">
-                        Don't have an account ? 
-                        <Link to="/sign-up" >  Register.</Link>
-                    </small>
-                </div>
-            </form>
-        </div>
-    );
+                    <FormGroup
+                        id="password"
+                        name="password"
+                        type="password"
+                        value={password}
+                        onChange={this.handleOnchage}
+                    >
+                        Password
+                    </FormGroup>
+
+                    <div className="form-group d-flex content-center">
+                        <Button
+                            className="btn btn-lg btn-primary"
+                            text="Sign In"
+                            onClick={e => console.log(e)}
+                            type="submit"
+                            disabled={isInvalid}
+                        ></Button>
+                    </div>
+
+                    {error && <p>{error.message}</p>}
+
+                    <div className="form-group">
+                        <small className="text">
+                            Don't have an account ? 
+                            <Link to="/sign-up" >  Register.</Link>
+                        </small>
+                    </div>
+                </form>
+            </div>
+        );
+    }
 }
 
-export default SignInForm;
+const SignInPage = compose(withRouter, withFirebase)(SignInForm);
+
+export default SignInPage;
+export { SignInForm }

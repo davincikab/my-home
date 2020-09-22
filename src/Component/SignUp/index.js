@@ -63,8 +63,7 @@ class SignUpForm extends React.Component {
         
         
         const isInvalid =
-        //   passwordOne.toString() != passwordTwo.toString();
-        // ||
+          passwordOne != passwordTwo ||
           passwordOne === ''||
           email === '' ||
           username === '';
