@@ -1,10 +1,13 @@
 import React from 'react';
+import { compose } from 'recompose';
+
 import FormGroup from '../FormGroup';
-import {FirebaseContext} from '../Firebase';
+import * as ROUTES from '../../constants/routes';
+import { withFirebase } from '../Firebase';
 
 import '../SignIn/SignIn.css';
 import Button from "../Button";
-import { Link } from "react-router-dom";
+import { Link, withRouter} from "react-router-dom";
 
 const INITIAL_STATE = {
     username: '',
@@ -21,24 +24,30 @@ class SignUpForm extends React.Component {
     }
    
     handleSubmit = (e) => {
-        const {username, email, passwordOne} = this.state;
+        e.preventDefault();
+
+        console.log("Submit data");
+        const { username, email, passwordOne } = this.state;
+        console.log(email, passwordOne);
 
         this.props.firebase.registerUserWithEmailAndPassword(email, passwordOne)
         .then(authUser => {
             this.setState({...INITIAL_STATE});
+            this.props.history.push(ROUTES.HOME);
+            console.log(authUser);
         })
         .catch(error => {
-            this.setState({error})
+            console.log(error.message);
+            this.setState({error});
         });
-
-        e.preventDefault();
+       
     }
 
     handleOnChange = (event) => {
          let target = event.target;
 
          this.setState({
-            [target.name]:[target.value]
+            [target.name]:target.value
          });
     }
 
@@ -50,20 +59,21 @@ class SignUpForm extends React.Component {
             passwordOne,
             passwordTwo,
             error,
-          } = this.state;
+        } = this.state;
         
         
         const isInvalid =
-          passwordOne !== passwordTwo ||
-          passwordOne === '' ||
+        //   passwordOne.toString() != passwordTwo.toString();
+        // ||
+          passwordOne === ''||
           email === '' ||
           username === '';
         
-        console.log(this.state);
+        console.log(passwordOne != passwordTwo);
 
         return (
             <div className="form-wrapper">
-                <form onSubmit={this.handleSubmit} className="form">
+                <form onSubmit={this.handleSubmit} className="form" method="POST">
                 <h3 className="title">Sign Up</h3>
                     <FormGroup
                         id="user-name"
@@ -86,7 +96,7 @@ class SignUpForm extends React.Component {
                     </FormGroup>
 
                     <FormGroup
-                        id="password"
+                        id="passwordOne"
                         name="passwordOne"
                         type="password"
                         value={passwordOne}
@@ -96,7 +106,7 @@ class SignUpForm extends React.Component {
                     </FormGroup>
 
                     <FormGroup
-                        id="password"
+                        id="passwordTwo"
                         name="passwordTwo"
                         type="password"
                         value={passwordTwo}
@@ -106,13 +116,21 @@ class SignUpForm extends React.Component {
                     </FormGroup>
 
                     <div className="form-group d-flex content-center">
-                        <Button
+                        {/* <Button
                             className="btn btn-lg btn-primary"
                             text="Sign Up"
                             onClick={e => console.log(e)}
                             type="submit"
                             disabled={isInvalid}
-                        ></Button>
+                        ></Button> */}
+
+                        <button
+                            type="submit"
+                            className="btn btn-lg btn-primary"
+                            disabled={isInvalid}
+                        >
+                            Sign Up
+                        </button>
                     </div>
                     {error && <p>{error.message}</p>}
 
@@ -128,7 +146,10 @@ class SignUpForm extends React.Component {
     }
 }
 
-const SignUpPage = withFirebase(SignUpForm);
+const SignUpPage = compose(
+    withRouter, 
+    withFirebase
+    )(SignUpForm);
 
 export default SignUpPage;
-export {SignUpForm};
+export { SignUpForm };
