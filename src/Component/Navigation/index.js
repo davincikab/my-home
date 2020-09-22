@@ -1,45 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import "./Navigation.css";
+ 
+import * as ROUTES from '../../constants/routes';
+import SignUpPage from '../SignUp';
 
-import Home from './Component/Home/Home';
-import About from './Component/About/About';
-import MapContainer from './Component/Map/Map';
-import SignInForm from './Component/SignIn';
-import SignUpPage from './Component/SignUp';
-
-function App() {
-  const [isCollapsed, setIsCollapsed] = useState(true);
-  const navbarRef = useRef(null);
-  const [height, setHeight] = useState(0);
-  const deviceWidth = window.innerWidth;
-
-  useEffect(() =>{
-    if(deviceWidth < 12) {
-      setIsCollapsed(true);
-    }
-
-    // update height
-   setHeight(navbarRef.current.scrollHeight);
-  }, [deviceWidth]);
-
-  const toggleNavLinks = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
-  const toggleActiveTab = (e) => {
-    console.log(e);
-    setIsCollapsed(true);
-  }
-
-  return (
-    <Router>
-      <div className="nav">
+export const Navigation = (props) => {
+    return (
+        <div className="nav">
         <nav className="navbar">
             <Link to="/" className="navbar-brand">myHome.</Link>
             <div 
@@ -109,8 +77,5 @@ function App() {
         </Switch>
 
       </div>
-    </Router>
-  );
+    )
 }
-
-export default App;

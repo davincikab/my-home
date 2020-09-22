@@ -21,6 +21,27 @@ class Firebase {
         this.db = app.database();
     }
 
+    // user authentication
+    registerUserWithEmailAndPassword = (email, password) => {
+        return this.auth.createUserWithEmailAndPassword(email, password);
+    }
+
+    signInWithEmailAndPassword = (email, password) => {
+        return this.auth.signInWithEmailAndPassword(email, password);
+    }
+
+    signOutUsers = () => {
+        return this.auth.signOut();
+    }
+
+    resetPassword = (email) => {
+        return this.auth.resetPassword(email);
+    }
+
+    passwordUpdate = (password) => {
+        return this.auth.passwordUpdate(password);
+    }
+    
     // methods to access the data
     home = hid => this.db.ref(`homes/features/${hid}`);
     homes = () => this.db.ref("homes");

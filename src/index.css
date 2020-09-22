@@ -3,7 +3,8 @@
   --white:#fff;
   --primary:#12886b;
   --light-teal:#338873;
-  --light-gray:#727171;
+  --light-gray:#c6c7c8;
+
 }
 
 body {
@@ -19,4 +20,18 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* buttons */
+.btn-lg {
+  padding: 0.9em 2em !important;
+}
+
+/* utilities */
+.d-flex {
+  display: flex;
+}
+
+.content-center {
+  justify-content: center;
 }

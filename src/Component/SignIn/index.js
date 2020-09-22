@@ -41,9 +41,9 @@ const SignInForm = (props) => {
                     Username
                 </FormGroup>
 
-                <div className="form-group">
+                <div className="form-group d-flex content-center">
                     <Button
-                        className="btn btn-primary"
+                        className="btn btn-lg btn-primary"
                         text="Sign In"
                         onClick={e => console.log(e)}
                         type="submit"
