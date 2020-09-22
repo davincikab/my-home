@@ -8,7 +8,11 @@
     background-clip: padding-box;
 }
 
-.filter::before {
+.filter.active-filter {
+    border: none;
+}
+
+.active-filter::before {
     content: " ";
     position: absolute;
     top: 0;

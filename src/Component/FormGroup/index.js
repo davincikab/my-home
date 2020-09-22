@@ -1,6 +1,8 @@
 import React from 'react';
 import FormControl from '../FormControl';
 
+import "./FormGroup.css";
+
 const FormGroup = ({id, name, type, value, onChange, children}) => {
     return (
         <div className="form-group">

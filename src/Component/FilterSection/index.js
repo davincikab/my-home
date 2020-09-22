@@ -8,10 +8,15 @@ const FilterTab = ({onVisualTypeChange,filterPopulation, filterBeds}) => {
     // application state;
     const [population, setPopulation] = useState(50);
     const [beds, setBeds] = useState(40);
+    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [activeVisual, setActiveVisual] = useState("default");
 
     const handleVisualizeByChange = (event) => {
         console.log(event.target.value);
-        onVisualTypeChange("circle", event.target.value);
+        let target = event.target;
+
+        target.value === "default" ? onVisualTypeChange("symbol", target.value) : onVisualTypeChange("circle", target.value);
+        setActiveVisual(target.value);
     }
 
     const handleFilterChange = (event) => {
@@ -27,18 +32,31 @@ const FilterTab = ({onVisualTypeChange,filterPopulation, filterBeds}) => {
     }
 
     return (
-        <div className="filter-tab">
+        <div className={isCollapsed ? "filter-tab collapse" : "filter-tab"}>
+            <div className="btn collapse-btn" onClick={e => setIsCollapsed(!isCollapsed)}>
+            </div>
             <div className="section">
                 <h5 className="section-title">Visualize By</h5>
 
                 {/*  */}
                 <div className="visual-section">
                     <RadioButton 
+                        id="default"
+                        name="filter"
+                        type="radio"
+                        value="default"
+                        onChange={handleVisualizeByChange}
+                        activeVisual={activeVisual}
+                    >
+                        Default
+                    </RadioButton>
+                    <RadioButton 
                         id="population"
                         name="filter"
                         type="radio"
                         value="Population"
                         onChange={handleVisualizeByChange}
+                        activeVisual={activeVisual}
                     >
                     Population
                     </RadioButton>
@@ -49,6 +67,7 @@ const FilterTab = ({onVisualTypeChange,filterPopulation, filterBeds}) => {
                         type="radio"
                         value="female"
                         onChange={handleVisualizeByChange}
+                        activeVisual={activeVisual}
                     >
                         Female
                     </RadioButton>
@@ -58,6 +77,7 @@ const FilterTab = ({onVisualTypeChange,filterPopulation, filterBeds}) => {
                         type="radio"
                         value="male"
                         onChange={handleVisualizeByChange}
+                        activeVisual={activeVisual}
                     >
                         Male
                     </RadioButton>
@@ -68,6 +88,7 @@ const FilterTab = ({onVisualTypeChange,filterPopulation, filterBeds}) => {
                         type="radio"
                         value="beds"
                         onChange={handleVisualizeByChange}
+                        activeVisual={activeVisual}
                     >
                         Bed
                     </RadioButton>

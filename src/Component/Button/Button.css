@@ -28,3 +28,22 @@
     padding: 0.8em 1.8em;
     border: 0px;
 }
+
+/* Button types */
+.btn-primary {
+    background-color: rgb(1, 158, 158);
+    color: var(--white);
+    border: none;
+}
+
+.btn-secondary {
+    background-color: rgb(1, 158, 158);
+}
+
+.btn-tertiary {
+    background-color: rgb(1, 158, 158);
+}
+
+.btn-small {
+    background-color: rgb(1, 158, 158);
+}

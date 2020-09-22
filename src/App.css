@@ -9,10 +9,11 @@
 }
 
 .navbar {
-  margin: 0 0 -18px;
+  /* margin: 0 0 -18px; */
   background-color: teal;
   padding: 0.5em 0;
   display: block;
+  z-index: 4;
   position: relative;
 }
 
@@ -54,6 +55,7 @@
 .navbar-nav {
   list-style: none;
   width: 100%;
+  z-index: 4;
   padding: 0;
   text-align: center;
   height: 0;

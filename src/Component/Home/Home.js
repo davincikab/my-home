@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
 
-import Button from '../Button/Button';
+import Button from '../Button';
 import Footer from  '../Footer/Footer';
 import Card from '../Card/Card';
 

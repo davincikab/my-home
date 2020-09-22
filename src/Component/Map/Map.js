@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import ReactMapboxGl, {Source, Layer, Feature, Popup } from 'react-mapbox-gl';
+import ReactMapboxGl, {Source, Layer, Feature, Popup, MapContext } from 'react-mapbox-gl';
 
 // firebase
 import {withFirebase } from '../Firebase';
@@ -100,12 +100,33 @@ function MapComponent(props) {
         event.target.getCanvas().style.cursor = "";
     }
 
+    // add control to the map 
+    const addControl = (map) => {
+        class WorkControl {
+            onAdd(map) {
+                this._map = map;
+                this._container = document.createElement('div');
+                this._container.className = 'mapboxgl-ctrl';
+                this._container.textContent = 'Hello, world';
+                return this._container;
+            }
+
+           onRemove() {
+                this._container.parentNode.removeChild(this._container);
+                this._map = undefined;
+            }
+        }
+
+
+        // map.addControl(new WorkControl()); GoldfishGoldfish66
+    };
+
     return (
         <div className="container">
           <Map
             style='mapbox://styles/mapbox/light-v10'
             containerStyle={{
-                height: '91.3vh',
+                height: '90.3vh',
                 width: '100vw'
             }}
             center={center}
@@ -135,7 +156,7 @@ function MapComponent(props) {
             }
 
             {   
-                visualField &&
+                visualField && visualType == "circle" &&
                 <Layer 
                     type="circle" 
                     id="homes" 
@@ -180,6 +201,13 @@ function MapComponent(props) {
                     </div>
                 </Popup>
             }
+
+                <MapContext.Consumer>
+                    {(map) => {
+                        // use `map` here
+                        addControl(map);
+                    }}
+                </MapContext.Consumer>
            
             </Map>
 

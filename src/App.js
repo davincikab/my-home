@@ -10,6 +10,8 @@ import {
 import Home from './Component/Home/Home';
 import About from './Component/About/About';
 import MapContainer from './Component/Map/Map';
+import SignInForm from './Component/SignIn';
+import SignUpForm from './Component/SignUp';
 
 function App() {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -32,6 +34,7 @@ function App() {
 
   const toggleActiveTab = (e) => {
     console.log(e);
+    setIsCollapsed(true);
   }
 
   return (
@@ -57,28 +60,51 @@ function App() {
             <li  onClick={toggleActiveTab}>
               <Link to="/">Home</Link>
             </li>
+
             <li onClick={toggleActiveTab}>
               <Link to="/map">Map</Link>
             </li>
+
             <li onClick={toggleActiveTab}>
               <Link to="/about" >About</Link>
             </li>
+
             <li onClick={toggleActiveTab}>
               <Link to="/about" >Donate</Link>
             </li>
+
+            <li onClick={toggleActiveTab}>
+              <Link to="/sign-in" >Sign In</Link>
+            </li>
+
+            <li onClick={toggleActiveTab}>
+              <Link to="/sign-up" >Sign Up</Link>
+            </li>
+
+            <li onClick={toggleActiveTab}>
+              <Link to="/about" >Sign Out</Link>
+            </li>
+
           </ul>
         </nav>
 
         {/* switch to map the path */}
         <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
           <Route path="/about">
             <About />
           </Route>
           <Route path="/map">
             <MapContainer />
           </Route>
-          <Route path="/">
-            <Home />
+          <Route path="/sign-in">
+            <SignInForm />
+          </Route>
+
+          <Route path="/sign-up">
+            <SignUpForm />
           </Route>
         </Switch>
 

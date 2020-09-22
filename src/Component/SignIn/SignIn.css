@@ -1,0 +1,33 @@
+.form h3 {
+    text-align: center;
+    margin-top: 0em;
+}
+
+.form-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+form  {
+    /* width: 30vw; */
+    margin: 1.4em;
+    box-shadow: 1px 1px 0.6em 0.3em #d3d4d3;
+    padding: 1em;
+}
+
+.text {
+    color:var(--light-teal);
+}
+
+.text a {
+    color: purple;
+    text-decoration: none;
+}
+
+@media (min-width:50em) {
+    .form {
+        width: 40%;
+    }
+}
