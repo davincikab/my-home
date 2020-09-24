@@ -2,7 +2,7 @@ import React from 'react';
 import './FormControl.css';
 
 const FormControl  = ({id, name, value, type, onChange}) => {
-    if(type == "range") {
+    if(type === "range") {
         return (
             <input 
                 className="form-control"

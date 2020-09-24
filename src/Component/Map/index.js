@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import ReactMapboxGl, {Source, Layer, Feature, Popup, MapContext } from 'react-mapbox-gl';
+import ReactMapboxGl, {Source, Layer, Popup, MapContext } from 'react-mapbox-gl';
 
 // firebase
 import {withFirebase } from '../Firebase';
@@ -101,24 +101,8 @@ function MapComponent(props) {
     }
 
     // add control to the map 
-    const addControl = (map) => {
-        class WorkControl {
-            onAdd(map) {
-                this._map = map;
-                this._container = document.createElement('div');
-                this._container.className = 'mapboxgl-ctrl';
-                this._container.textContent = 'Hello, world';
-                return this._container;
-            }
+    const addControl = () => {
 
-           onRemove() {
-                this._container.parentNode.removeChild(this._container);
-                this._map = undefined;
-            }
-        }
-
-
-        // map.addControl(new WorkControl()); GoldfishGoldfish66
     };
 
     return (
@@ -156,7 +140,7 @@ function MapComponent(props) {
             }
 
             {   
-                visualField && visualType == "circle" &&
+                visualField && visualType === "circle" &&
                 <Layer 
                     type="circle" 
                     id="homes" 

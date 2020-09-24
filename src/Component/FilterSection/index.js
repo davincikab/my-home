@@ -22,7 +22,7 @@ const FilterTab = ({onVisualTypeChange,filterPopulation, filterBeds}) => {
     const handleFilterChange = (event) => {
         let target = event.target;
 
-       if(target.name == "population") {
+       if(target.name === "population") {
             filterPopulation(target.value);
             setPopulation(target.value);
        } else {

@@ -2,6 +2,8 @@ import React, {  } from 'react';
 import { withAuthentication } from './Component/Session';
 
 import './App.css';
+
+import * as ROUTES from "./constants/routes";
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,6 +16,8 @@ import MapContainer from './Component/Map';
 import SignInPage from './Component/SignIn';
 import SignUpPage from './Component/SignUp';
 import Navigation from "./Component/Navigation";
+import PassResetPage from "./Component/PasswordReset";
+import PassWordResetPage from './Component/PasswordReset';
 
 const App = () => {
   return (
@@ -36,6 +40,10 @@ const App = () => {
 
                 <Route path="/sign-up">
                     <SignUpPage />
+                </Route>
+
+                <Route path={ROUTES.PASSWORD_FORGET} >
+                  <PassWordResetPage />
                 </Route>
           </Switch>
         </div>

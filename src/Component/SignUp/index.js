@@ -6,7 +6,6 @@ import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
 
 import '../SignIn/SignIn.css';
-import Button from "../Button";
 import { Link, withRouter} from "react-router-dom";
 
 const INITIAL_STATE = {
@@ -27,7 +26,7 @@ class SignUpForm extends React.Component {
         e.preventDefault();
 
         console.log("Submit data");
-        const { username, email, passwordOne } = this.state;
+        const { email, passwordOne } = this.state;
         console.log(email, passwordOne);
 
         this.props.firebase.registerUserWithEmailAndPassword(email, passwordOne)
@@ -63,12 +62,12 @@ class SignUpForm extends React.Component {
         
         
         const isInvalid =
-          passwordOne != passwordTwo ||
+          passwordOne !== passwordTwo ||
           passwordOne === ''||
           email === '' ||
           username === '';
         
-        console.log(passwordOne != passwordTwo);
+        console.log(passwordOne !== passwordTwo);
 
         return (
             <div className="form-wrapper">
