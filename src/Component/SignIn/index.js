@@ -30,7 +30,7 @@ class SignInForm extends React.Component {
         this.props.firebase.signInWithEmailAndPassword(email, password)
         .then(() => {
             this.setState({...INIIAL_STATE});
-            this.props.history.push(ROUTES.MAP);
+            this.props.history.push(ROUTES.HOME);
         })
         .catch(error => {
             this.setState({error});

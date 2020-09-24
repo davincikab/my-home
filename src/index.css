@@ -27,10 +27,10 @@ code {
   padding: 0.9em 2em !important;
 }
 
-.btn-no-outline {
-  background-color: white;
-  border-color: transparent;
-  color: var(--light-teal);
+.btn-outline-none  {
+  background-color: transparent;
+  border: 0px !important;
+  color: var(--white);
 }
 
 /* utilities */
