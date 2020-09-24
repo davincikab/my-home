@@ -8,6 +8,7 @@ import * as ROUTES from "../../constants/routes";
 import './SignIn.css';
 import Button from "../Button";
 import { Link, withRouter } from "react-router-dom";
+import { PasswordResetLink } from '../PasswordReset';
 
 const INIIAL_STATE = {
     email:"",
@@ -90,10 +91,13 @@ class SignInForm extends React.Component {
                     {error && <p>{error.message}</p>}
 
                     <div className="form-group">
+                        <PasswordResetLink />
+
                         <small className="text">
                             Don't have an account ? 
                             <Link to="/sign-up" >  Register.</Link>
                         </small>
+
                     </div>
                 </form>
             </div>

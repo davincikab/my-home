@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { withFirebase } from '../Firebase';
+import { AuthContext } from './index';
 
-const withAuthentication = Component => (props) => {
+const withAuthentication = Component => {
     class WithAuthentication extends React.Component {
         constructor(props) {
             super(props);
@@ -21,8 +23,8 @@ const withAuthentication = Component => (props) => {
         
           }
         
-        componentWillMount() {
-            // this.listener;
+        componentWillUnmount() {
+            this.listener();
         }
 
         render() {

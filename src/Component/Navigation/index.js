@@ -2,22 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import "./Navigation.css";
  
 import * as ROUTES from '../../constants/routes';
-import { AuthContext } from './Component/Session';
+import { AuthContext } from '../Session';
 
 import {
-    Switch,
-    Route,
     Link
   } from "react-router-dom";
-  
-  import Home from '../Home';
-  import About from '../About';
-  import MapContainer from '../Map';
-  import SignInPage from '../SignIn';
-  import SignUpPage from '../SignUp';
   import SignOutButton from '../SignOut';
 
-const Navigation = () => {
+const Navigation = (props) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
     const navbarRef = useRef(null);
     const [height, setHeight] = useState(0);
@@ -41,9 +33,10 @@ const Navigation = () => {
       setIsCollapsed(true);
     }
 
+    // console.log(props.authUser);
     return (
-        <AuthContext.Consumer >
-            <div className="nav">
+        <AuthContext.Consumer>
+            { authUser => (
                 <nav className="navbar">
                     <Link to="/" className="navbar-brand">myHome.</Link>
                     <div 
@@ -62,52 +55,32 @@ const Navigation = () => {
                     }}
                 >
                     <li  onClick={toggleActiveTab}>
-                    <Link to="/">Home</Link>
+                    <Link to={ROUTES.HOME}>Home</Link>
                     </li>
 
                     <li onClick={toggleActiveTab}>
-                    <Link to="/map">Map</Link>
+                    <Link to={ROUTES.MAP}>Map</Link>
                     </li>
 
                     <li onClick={toggleActiveTab}>
-                    <Link to="/about" >About</Link>
+                    <Link to={ROUTES.ABOUT} >About</Link>
                     </li>
 
                     <li onClick={toggleActiveTab}>
-                    <Link to="/about" >Donate</Link>
+                    <Link to={ROUTES.ABOUT} >Donate</Link>
                     </li>
-                    { authUser ? 
-                        <NavigationAuth toggleActiveTab={toggleActiveTab}/> : 
+                    { props.authUser ? 
+                        <NavigationAuth toggleActiveTab={toggleActiveTab} /> : 
                         <NavigationNonAuth toggleActiveTab={toggleActiveTab} /> 
                     }
 
                 </ul>
                 </nav>
-
-                {/* switch to map the path */}
-                <Switch>
-                <Route path="/" exact>
-                    <Home />
-                </Route>
-                <Route path="/about">
-                    <About />
-                </Route>
-                <Route path="/map">
-                    <MapContainer />
-                </Route>
-                <Route path="/sign-in">
-                    <SignInPage />
-                </Route>
-
-                <Route path="/sign-up">
-                    <SignUpPage />
-                </Route>
-                </Switch>
-
-            </div>
+            )}
         </AuthContext.Consumer>
     )
 }
+
 
 // Aunthenicate
 const NavigationAuth = ({ toggleActiveTab }) => (
@@ -117,7 +90,7 @@ const NavigationAuth = ({ toggleActiveTab }) => (
         </li>
 
         <li onClick={toggleActiveTab}>
-            <Link to="/about" >Account</Link>
+            <Link to={ROUTES.ABOUT} >Account</Link>
         </li>
     </>
 );
@@ -125,14 +98,18 @@ const NavigationAuth = ({ toggleActiveTab }) => (
 const NavigationNonAuth = ({ toggleActiveTab }) => (
     <>
         <li onClick={toggleActiveTab}>
-            <Link to="/sign-in" >Sign In</Link>
+            <Link to={ROUTES.SIGN_IN} >Sign In</Link>
         </li>
 
         <li onClick={toggleActiveTab}>
-            <Link to="/sign-up" >Sign Up</Link>
+            <Link to={ROUTES.SIGN_UP} >Sign Up</Link>
         </li>
     </>
 );
 
 
 export default Navigation;
+
+
+// user:rcsoft.luis@gmail.com
+// pssw:p3@X4MEXAK_kJb
