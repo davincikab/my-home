@@ -86,7 +86,7 @@ const Navigation = (props) => {
 const NavigationAuth = ({ toggleActiveTab }) => (
     <>  
         <li onClick={toggleActiveTab}>
-            <Link to={ROUTES.ABOUT} >Account</Link>
+            <Link to={ROUTES.ACCOUNT} >Account</Link>
         </li>
         <li onClick={toggleActiveTab}>
             <SignOutButton />

@@ -16,8 +16,9 @@ import MapContainer from './Component/Map';
 import SignInPage from './Component/SignIn';
 import SignUpPage from './Component/SignUp';
 import Navigation from "./Component/Navigation";
-import PassResetPage from "./Component/PasswordReset";
-import PassWordResetPage from './Component/PasswordReset';
+import PasswordChangePage from "./Component/PasswordChange";
+import PassWordResetPage from "./Component/PasswordReset";
+import Account from "./Component/Account";
 
 const App = () => {
   return (
@@ -25,25 +26,36 @@ const App = () => {
         <div className="nav">
           <Navigation />
           <Switch>
-                <Route path="/" exact>
+                <Route path={ROUTES.HOME} exact>
                     <Home />
                 </Route>
-                <Route path="/about">
+
+                <Route path={ROUTES.ABOUT}>
                     <About />
                 </Route>
-                <Route path="/map">
+
+                <Route path={ROUTES.MAP}>
                     <MapContainer />
                 </Route>
-                <Route path="/sign-in">
+
+                <Route path={ROUTES.SIGN_IN}>
                     <SignInPage />
                 </Route>
 
-                <Route path="/sign-up">
+                <Route path={ROUTES.SIGN_UP}>
                     <SignUpPage />
+                </Route>
+
+                <Route path={ROUTES.ACCOUNT}>
+                    <Account />
                 </Route>
 
                 <Route path={ROUTES.PASSWORD_FORGET} >
                   <PassWordResetPage />
+                </Route>
+
+                <Route path={ROUTES.PASSWORD_CHANGE} >
+                  <PasswordChangePage />
                 </Route>
           </Switch>
         </div>

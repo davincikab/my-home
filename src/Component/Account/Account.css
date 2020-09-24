@@ -1,0 +1,13 @@
+.row {
+    display: flex;
+    width: 100%;
+}
+
+.row .form-wrapper {
+    height: auto;
+    display: block;
+}
+
+.form-wrapper .form {
+    width: auto;
+}

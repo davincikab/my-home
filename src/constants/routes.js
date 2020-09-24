@@ -7,4 +7,4 @@ export const ABOUT = '/about';
 export const MAP = '/map';
 export const ADMIN = '/admin';
 export const PASSWORD_FORGET = '/pw-forget';
-// export const PASSWORD_FORGET = ''
+export const PASSWORD_CHANGE = '/pw-change';
