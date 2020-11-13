@@ -6,8 +6,9 @@ import { AuthContext } from '../Session';
 
 import {
     Link
-  } from "react-router-dom";
-  import SignOutButton from '../SignOut';
+} from "react-router-dom";
+
+import SignOutButton from '../SignOut';
 
 const Navigation = (props) => {
     const [isCollapsed, setIsCollapsed] = useState(true);

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
-import ReactMapboxGl, {Source, Layer, Popup, MapContext } from 'react-mapbox-gl';
 
+import fs from 'fs';
+
+import ReactMapboxGl, {Source, Layer, Popup, MapContext } from 'react-mapbox-gl';
 import { useLocation } from 'react-router-dom';
 
 // firebase
@@ -8,12 +10,15 @@ import {withFirebase } from '../Firebase';
 import './Map.css';
 
 import FilterTab from "../FilterSection";
+import { GeolocateControl } from "mapbox-gl";
 
 // access token
+const ACCESS_TOKEN = 'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA'
 const Map = ReactMapboxGl({
-    accessToken:
-      'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29iMmp6In0.9ZdvuGInodgDk7cv-KlujA'
+    accessToken:ACCESS_TOKEN  
 });
+
+const MapboxDirections = window.MapboxDirections;
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -27,7 +32,9 @@ function MapComponent(props) {
     const [center, setCenter] = useState([34.9321088,-0.6299662865]);
     const [visualType, setVisualType] = useState('symbol');
     const [visualField, setVisualField] = useState("");
+    const [isDirectionAdded, setIsDirectionAdded] = useState(false);
     const [activeHome, setActiveHome] = useState();
+    const [userLocation, setUserLocation] = useState();
 
     let query = useQuery();
     useEffect(() => {
@@ -132,7 +139,19 @@ function MapComponent(props) {
 
     // add control to the map 
     const addControl = (map) => {
+        console.log(map);
 
+        if(!isDirectionAdded) {
+            const directionControl = new MapboxDirections({
+                unit: 'metric',
+                accessToken:ACCESS_TOKEN
+            });
+
+            // this.
+            map.addControl(directionControl, 'top-right');
+            setIsDirectionAdded(true);
+
+        }
     };
 
     return (
@@ -224,9 +243,10 @@ function MapComponent(props) {
                     {(map) => {
                         // use `map` here
                         addControl(map);
+                        
                     }}
                 </MapContext.Consumer>
-           
+                <GeolocationControl />
             </Map>
 
             {
@@ -253,7 +273,39 @@ const PopupComponent = ({popupData}) => (
             <p><b>Tel Phone</b> {popupData.properties.telephone_no}</p>
         </div>
     </div>
-)
+);
+
+const GeolocationControl = (props) => {
+    // geolocation logic
+    return (
+        <div style={{...positions['bottom-right'], position:'absolute'}}>
+            <button>
+                <img src={require('../../assets/images/geolocate.svg')}/>
+            </button>
+        </div>
+    )
+}
+
+var positions = {
+    'top-right': { top: 10, right: 10, bottom: 'auto', left: 'auto' },
+    'top-left': { top: 10, left: 10, bottom: 'auto', right: 'auto' },
+    'bottom-right': { bottom: 20, right: 10, top: 'auto', left: 'auto' },
+    'bottom-left': { bottom: 10, left: 10, top: 'auto', right: 'auto' }
+};
+
+var containerStyle = {
+    position: 'absolute',
+    zIndex: 10,
+    boxShadow: '0px 1px 4px rgba(0, 0, 0, .3)',
+    border: '1px solid rgba(0, 0, 0, 0.1)',
+    right: 50,
+    backgroundColor: '#fff',
+    opacity: 0.85,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    padding: '3px 7px'
+};
 
 const MapContainer = withFirebase(MapComponent);
 export default MapContainer;
