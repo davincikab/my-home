@@ -1,26 +1,27 @@
 {
   "files": {
-    "main.css": "/my-home/static/css/main.9e855291.chunk.css",
-    "main.js": "/my-home/static/js/main.59e15cc1.chunk.js",
-    "main.js.map": "/my-home/static/js/main.59e15cc1.chunk.js.map",
+    "main.css": "/my-home/static/css/main.8b4ce282.chunk.css",
+    "main.js": "/my-home/static/js/main.3aa9ae09.chunk.js",
+    "main.js.map": "/my-home/static/js/main.3aa9ae09.chunk.js.map",
     "runtime-main.js": "/my-home/static/js/runtime-main.b57a1af9.js",
     "runtime-main.js.map": "/my-home/static/js/runtime-main.b57a1af9.js.map",
     "static/css/2.0a5b19c0.chunk.css": "/my-home/static/css/2.0a5b19c0.chunk.css",
-    "static/js/2.cd9cfdcd.chunk.js": "/my-home/static/js/2.cd9cfdcd.chunk.js",
-    "static/js/2.cd9cfdcd.chunk.js.map": "/my-home/static/js/2.cd9cfdcd.chunk.js.map",
+    "static/js/2.3505b115.chunk.js": "/my-home/static/js/2.3505b115.chunk.js",
+    "static/js/2.3505b115.chunk.js.map": "/my-home/static/js/2.3505b115.chunk.js.map",
     "index.html": "/my-home/index.html",
-    "precache-manifest.b956eaa401d42598564682180ddc54db.js": "/my-home/precache-manifest.b956eaa401d42598564682180ddc54db.js",
+    "precache-manifest.73890e70cfc27bcec064f47238a07618.js": "/my-home/precache-manifest.73890e70cfc27bcec064f47238a07618.js",
     "service-worker.js": "/my-home/service-worker.js",
     "static/css/2.0a5b19c0.chunk.css.map": "/my-home/static/css/2.0a5b19c0.chunk.css.map",
-    "static/css/main.9e855291.chunk.css.map": "/my-home/static/css/main.9e855291.chunk.css.map",
-    "static/js/2.cd9cfdcd.chunk.js.LICENSE.txt": "/my-home/static/js/2.cd9cfdcd.chunk.js.LICENSE.txt",
-    "static/media/children.jpg": "/my-home/static/media/children.672e8a1a.jpg"
+    "static/css/main.8b4ce282.chunk.css.map": "/my-home/static/css/main.8b4ce282.chunk.css.map",
+    "static/js/2.3505b115.chunk.js.LICENSE.txt": "/my-home/static/js/2.3505b115.chunk.js.LICENSE.txt",
+    "static/media/children.jpg": "/my-home/static/media/children.672e8a1a.jpg",
+    "static/media/geolocate.svg": "/my-home/static/media/geolocate.ad45a0c8.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.b57a1af9.js",
     "static/css/2.0a5b19c0.chunk.css",
-    "static/js/2.cd9cfdcd.chunk.js",
-    "static/css/main.9e855291.chunk.css",
-    "static/js/main.59e15cc1.chunk.js"
+    "static/js/2.3505b115.chunk.js",
+    "static/css/main.8b4ce282.chunk.css",
+    "static/js/main.3aa9ae09.chunk.js"
   ]
 }
