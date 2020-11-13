@@ -4,6 +4,11 @@
     line-height: 1.5;
     padding: 0.1em;
     padding: 0.5em 1em;
+    width:auto;
+}
+
+.form-control-lg {
+    width: 100%;
 }
 
 .form-control:focus {

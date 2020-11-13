@@ -20,7 +20,7 @@ class PasswordChangeForm extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        const {passwordOne, passwordTwo} = this.state;
+        const { passwordOne } = this.state;
 
         this.props.firebase.passwordUpdate(passwordOne)
         .then(() => {

@@ -55,7 +55,7 @@ const Navigation = (props) => {
                     }}
                 >
                     <li  onClick={toggleActiveTab}>
-                    <Link to={ROUTES.HOME}>Home</Link>
+                    <Link to={ROUTES.HOME} >Home</Link>
                     </li>
 
                     <li onClick={toggleActiveTab}>

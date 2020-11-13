@@ -2,7 +2,7 @@
 
 .btn {
     border-radius: 0.2em;
-    border: 1px solid var(--gray);
+    /* border: 1px solid var(--gray); */
     padding: 0.5em 1em;
 }
 

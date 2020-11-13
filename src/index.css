@@ -22,6 +22,26 @@ code {
     monospace;
 }
 
+/* list  */
+.list-group {
+  list-style-type: none;
+  width: 100%;
+}
+
+.list-group-item {
+  background-color:var(--white);
+  color:var(--gray);
+  padding:0.5em;
+  font-size:1.1em;
+  border-top: 1px solid var(--light-gray);
+  border-radius: 4px;
+}
+
+.list-group-item:hover {
+  background-color: var(--primary);
+  color:white;
+}
+
 /* buttons */
 .btn-lg {
   padding: 0.9em 2em !important;
@@ -41,3 +61,25 @@ code {
 .content-center {
   justify-content: center;
 }
+
+/* text */
+.text-lg {
+  font-size: 1.2em;
+}
+
+/* width */
+.w-50 {
+  width: 90%;
+}
+
+/* margin */ 
+.mt-2 {
+  margin-top: 0.5rem !important;
+}
+
+@media(min-width:50em) {
+  .w-50 {
+    width:50%;
+  }
+}
+
