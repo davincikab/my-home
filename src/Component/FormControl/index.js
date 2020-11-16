@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './FormControl.css';
 
 const FormControl  = ({id, name, value, type, placeholder="", className="form-control", onChange}) => {

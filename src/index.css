@@ -50,7 +50,7 @@ code {
 .btn-outline-none  {
   background-color: transparent;
   border: 0px !important;
-  color: var(--white);
+  color: var(--primary);
 }
 
 /* utilities */
@@ -75,6 +75,16 @@ code {
 /* margin */ 
 .mt-2 {
   margin-top: 0.5rem !important;
+}
+
+.my-2 {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;;
+}
+
+.mx-2 {
+  margin-right: 0.5rem !important;
+  margin-left: 0.5rem !important;;
 }
 
 @media(min-width:50em) {

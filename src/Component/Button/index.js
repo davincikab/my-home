@@ -1,7 +1,6 @@
 import React from 'react';
 import './Button.css';
 function Button(props) {
-    console.log('Button disabled:'+ props.disabled);
     return (
         <button 
             className={props.className}

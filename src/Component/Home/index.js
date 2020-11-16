@@ -6,7 +6,7 @@ import Footer from  '../Footer/Footer';
 import Card from '../Card/Card';
 
 import FormControl from '../FormControl';
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class HomeComponent extends React.Component {
     constructor(props) {
