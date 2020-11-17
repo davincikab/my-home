@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 
 import ReactMapboxGl, {Source, Layer, Popup, MapContext } from 'react-mapbox-gl';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 import style from '../../assets/mapstyles';
 
 // firebase
-import {withFirebase } from '../Firebase';
+import { withFirebase } from '../Firebase';
 import './Map.css';
 
 import FilterTab from "../FilterSection";
@@ -54,15 +54,18 @@ function MapComponent(props) {
     useEffect(() => {
         // get the data from firebase
         props.firebase.homes().on("value", snapshot => {
-            let homesSnapshot = snapshot.val();
+            let homesSnapshot = createGeojson(snapshot.val());
 
             // update homes data
             setHomes(homesSnapshot);
             setData(homesSnapshot);
 
             if(query.get('id')) {
+                let id = query.get('id');
+
                 // update active home object
-                let home = homesSnapshot.features.find(feature => feature.properties.id === query.get('id'));
+                let home = homesSnapshot.features.find(feature => feature.properties.id === parseInt(id));
+
                 setCenter(home.geometry.coordinates);
                 setZoom(12);
 
@@ -82,7 +85,7 @@ function MapComponent(props) {
     const filterPopulation = (value) => {
         let filterHomes = JSON.parse(JSON.stringify(data));
 
-        filterHomes.features = filterHomes.features.filter(home => home.properties.Population < value);
+        filterHomes.features = filterHomes.features.filter(home => home.properties.population < value);
         setHomes(filterHomes);
     }
 
@@ -91,6 +94,31 @@ function MapComponent(props) {
 
         filterHomes.features = filterHomes.features.filter(home => home.properties.beds < value);
         setHomes(filterHomes);
+    }
+
+    const createGeojson = (data) => {
+        let dummyGeojson = {
+            "type": "FeatureCollection",
+            "features": [
+            ]
+        };
+
+        data.forEach(home => {
+            let feature = {
+                "type": "Feature",
+                "properties": home,
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [home.longitude, home.latitude]
+                }
+            }
+
+            dummyGeojson.features.push(feature)
+        });
+
+        console.log(dummyGeojson);
+
+        return dummyGeojson;
     }
 
     // update visual type
@@ -260,7 +288,7 @@ function MapComponent(props) {
                         'bottom-left': [12, -38],  'bottom': [0, 0], 'bottom-right': [-12, -38]
                     }}
                 >
-                    <PopupComponent popupData={popupData} setDestination={updateDestination} />
+                    <PopupComponent popupData={popupData} setDestination={updateDestination} firebase={props.firebase}/>
                 </Popup>
             }
             {
@@ -271,7 +299,7 @@ function MapComponent(props) {
                         'bottom-left': [12, -38],  'bottom': [0, 0], 'bottom-right': [-12, -38]
                     }}
                 >
-                    <PopupComponent popupData={activeHome} setDestination={updateDestination} />
+                    <PopupComponent popupData={activeHome} setDestination={updateDestination} firebase={props.firebase}/>
                 </Popup>
             }
 
@@ -299,22 +327,55 @@ function MapComponent(props) {
 
 
 // popup component
-const PopupComponent = ({popupData, setDestination}) => (
-    <div className="popup-content">
-        <h1 className="popup-title">{popupData.properties.Name}</h1>
-        <div className="popup-body">
-            <p><b>Owner</b> {popupData.properties.Owner}</p>
-            <p><b>Population</b> {popupData.properties.Population}</p>
-            <p><b>Tel Phone</b> {popupData.properties.telephone_no}</p>
-        </div>
+const PopupComponent = ({popupData, setDestination, firebase}) => {
+    let url = "pictures/" + popupData.properties.name + ".jpg";
 
-        <Button 
-            className="btn my-2 mx-2 btn-outline-none" 
-            onClick={() => setDestination(popupData.geometry.coordinates)} 
-            text="Get Direction"
-        />
-    </div>
-);
+    const [imageUrl, setImageUrl] = useState('');
+    const picture = firebase.picture(url);
+
+    picture.getDownloadURL()
+    .then(imageUrl => {
+        setImageUrl(imageUrl);
+        console.log(imageUrl);
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+    return (
+        <div className="popup-content">
+            <h1 className="popup-title">{popupData.properties.name}</h1>
+            <div className="popup-body">
+                <p><b>Owner    </b> {popupData.properties.registration_details}</p>
+                <p><b>Population</b> {popupData.properties.population}</p>
+                <p><b>Tel Phone</b> {popupData.properties.telephone_no}</p>
+            </div>
+
+            {
+                imageUrl && 
+                <img 
+                    src={imageUrl} 
+                    alt={popupData.properties.name}
+                    className="img-thumbnail"
+                />
+            }
+
+            <div className="d-flex more-info">
+                <Button 
+                    className="btn my-2 mx-2 btn-outline-none" 
+                    onClick={() => setDestination(popupData.geometry.coordinates)} 
+                    text="Get Direction"
+                />
+
+                <span className="mr-1">
+                    <Link to={`/about/${popupData.properties.name}/${popupData.properties.id}/`} >More info ...</Link>
+                </span>
+            </div>
+
+        </div>
+    );
+
+}
 
 
 const MapContainer = withFirebase(MapComponent);

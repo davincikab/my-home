@@ -8,7 +8,7 @@ const FilterTab = ({onVisualTypeChange,filterPopulation, filterBeds}) => {
     // application state;
     const [population, setPopulation] = useState(50);
     const [beds, setBeds] = useState(40);
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(true);
     const [activeVisual, setActiveVisual] = useState("default");
 
     const handleVisualizeByChange = (event) => {
@@ -54,7 +54,7 @@ const FilterTab = ({onVisualTypeChange,filterPopulation, filterBeds}) => {
                         id="population"
                         name="filter"
                         type="radio"
-                        value="Population"
+                        value="population"
                         onChange={handleVisualizeByChange}
                         activeVisual={activeVisual}
                     >

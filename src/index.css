@@ -41,6 +41,12 @@ code {
   background-color: var(--primary);
   color:white;
 }
+/* images */
+.img-thumbnail {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+}
 
 /* buttons */
 .btn-lg {
@@ -69,7 +75,11 @@ code {
 
 /* width */
 .w-50 {
-  width: 90%;
+  width: 90% !important;
+}
+
+.w-100 {
+  width:100% !important;
 }
 
 /* margin */ 
@@ -87,9 +97,16 @@ code {
   margin-left: 0.5rem !important;;
 }
 
+.mr-1 {
+  margin-right: 0.25rem !important;
+}
+
 @media(min-width:50em) {
   .w-50 {
-    width:50%;
+    width:50% !important;
+  }
+  .w-100 {
+    width:100% !important;
   }
 }
 

@@ -7,6 +7,8 @@ import Card from '../Card/Card';
 
 import FormControl from '../FormControl';
 import { withRouter } from "react-router-dom";
+import {withFirebase } from '../Firebase';
+import { compose } from 'recompose';
 
 class HomeComponent extends React.Component {
     constructor(props) {
@@ -15,7 +17,7 @@ class HomeComponent extends React.Component {
         this.state = {
             searchTerm:'',
             results:[],
-            homes:[{name:"Mwiki", id:1}, {name:"Naivasha", id:2}, {name:"Nairobi", id:3}]
+            homes:[]
         };
     }
 
@@ -47,7 +49,16 @@ class HomeComponent extends React.Component {
 
     componentDidMount() {
         // get the data from the props
+        this.props.firebase.homes().on("value", snapshot => {
+            console.log(snapshot.val());
+            this.setState({
+                homes:snapshot.val()
+            });
+        });
+    }
 
+    componentWillUnmount() {
+        this.props.firebase.homes().off();
     }
 
     render() {
@@ -64,7 +75,7 @@ class HomeComponent extends React.Component {
                             value={searchTerm}
                             type={"text"}
                             placeholder={"Search Children's home ..."}
-                            className="form-control text-lg"
+                            className="form-control text-lg w-100"
                             onChange={this.onTextChange}
                         />
 
@@ -107,5 +118,9 @@ class HomeComponent extends React.Component {
 }
 
 
-const Home = withRouter(HomeComponent); 
+const Home = compose(
+    withRouter,
+    withFirebase
+)(HomeComponent); 
+
 export default Home;

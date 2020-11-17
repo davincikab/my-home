@@ -1,6 +1,7 @@
 import app from '@firebase/app';
 import '@firebase/auth';
 import '@firebase/database';
+import '@firebase/storage';
 
 var firebaseConfig = {
     apiKey: "AIzaSyCEBeQ6WgDFqOElGO4JTwF5Vt9_8i358fY",
@@ -19,6 +20,7 @@ class Firebase {
 
         this.auth = app.auth();
         this.db = app.database();
+        this.storage = app.storage();
     }
 
     // user authentication
@@ -45,6 +47,9 @@ class Firebase {
     // methods to access the data
     home = hid => this.db.ref(`homes/features/${hid}`);
     homes = () => this.db.ref("homes");
+
+    // get the imaged from firebase storage
+    picture = (name) => this.storage.ref().child(name);
 }
 
 export default Firebase;
