@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
 
-// import Button from '../Button';
+import Button from '../Button';
 import Footer from  '../Footer/Footer';
 import Card from '../Card/Card';
 
@@ -30,6 +30,16 @@ class HomeComponent extends React.Component {
 
     onTextChange = (e) => {
         let text = e.target.value;
+       
+        if(text.length < 2) {
+            this.setState({
+                searchTerm:text,
+                results:[]
+            });
+
+            return;
+        }
+
         console.log(text);
 
         // filter the homes
@@ -40,6 +50,8 @@ class HomeComponent extends React.Component {
                 return home;
             }
         });
+
+        homes = homes.length > 5 ? homes.slice(0, 5) : homes;
 
         this.setState({
             searchTerm:text,
@@ -67,28 +79,30 @@ class HomeComponent extends React.Component {
         return (
             <div className="main-page">
                 <div className="landing">
-                    {/* <Button text="Children's Home" onClick={clickHandler} className="btn custom-btn"/> */}
-                    <div className="w-50">
-                        <FormControl 
-                            id={"search-term"}
-                            name={"q"}
-                            value={searchTerm}
-                            type={"text"}
-                            placeholder={"Search Children's home ..."}
-                            className="form-control text-lg w-100"
-                            onChange={this.onTextChange}
-                        />
+                    <div className="w-50 inner-container">
+                        <Button text="Children's Home" onClick={this.clickHandler} className="btn custom-btn my-2"/>
+                        <div className="w-100">
+                            <FormControl 
+                                id={"search-term"}
+                                name={"q"}
+                                value={searchTerm}
+                                type={"text"}
+                                placeholder={"Search Children's home ..."}
+                                className="form-control text-lg w-100"
+                                onChange={this.onTextChange}
+                            />
 
-                        <div className="list-group mt-2">
-                            {
-                                results.map(result => (
-                                    <li 
-                                        key={result.id}
-                                        className="list-group-item"
-                                        onClick={() => this.clickHandler(result)}
-                                    >{result.name}</li>
-                                ))
-                            }
+                            <div className="list-group mt-2">
+                                {
+                                    results.map(result => (
+                                        <li 
+                                            key={result.id}
+                                            className="list-group-item"
+                                            onClick={() => this.clickHandler(result)}
+                                        >{result.name}</li>
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>

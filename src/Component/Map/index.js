@@ -67,7 +67,7 @@ function MapComponent(props) {
                 let home = homesSnapshot.features.find(feature => feature.properties.id === parseInt(id));
 
                 setCenter(home.geometry.coordinates);
-                setZoom(12);
+                setZoom(10.5);
 
                 // active home from the search
                 setActiveHome(home);
@@ -157,13 +157,15 @@ function MapComponent(props) {
 
             let activeHome = homes.features.find(hme => hme.properties.id === feature.properties.id);
             setPopupData(activeHome);
+
+            setZoom(currentZoom);
+            setCenter(currentCenter);
+            setActiveHome(null);
         } else {
             setPopupData({});
         }
 
-        setZoom(currentZoom);
-        setCenter(currentCenter);
-        setActiveHome(null);
+       
         
     }
 
@@ -218,7 +220,7 @@ function MapComponent(props) {
     };
 
     return (
-        <div className="container">
+        <div className="container-fluid">
           <Map
             style='mapbox://styles/mapbox/light-v10'
             containerStyle={{
@@ -333,15 +335,18 @@ const PopupComponent = ({popupData, setDestination, firebase}) => {
     const [imageUrl, setImageUrl] = useState('');
     const picture = firebase.picture(url);
 
-    picture.getDownloadURL()
-    .then(imageUrl => {
-        setImageUrl(imageUrl);
-        console.log(imageUrl);
-    })
-    .catch(error => {
-        console.error(error);
-    });
-
+    useEffect(() => {
+        picture.getDownloadURL()
+        .then(imageUrl => {
+            setImageUrl(imageUrl);
+            console.log(imageUrl);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    
+    }, [url]);
+   
     return (
         <div className="popup-content">
             <h1 className="popup-title">{popupData.properties.name}</h1>

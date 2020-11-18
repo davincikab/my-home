@@ -45,7 +45,7 @@ class Firebase {
     }
     
     // methods to access the data
-    home = hid => this.db.ref(`homes/features/${hid}`);
+    home = hid => this.db.ref(`homes/${hid}`);
     homes = () => this.db.ref("homes");
 
     // get the imaged from firebase storage

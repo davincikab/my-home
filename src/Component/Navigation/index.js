@@ -63,9 +63,9 @@ const Navigation = (props) => {
                     <Link to={ROUTES.MAP}>Map</Link>
                     </li>
 
-                    <li onClick={toggleActiveTab}>
-                    <Link to={ROUTES.ABOUT} >About</Link>
-                    </li>
+                    {/* <li onClick={toggleActiveTab}>
+                        <Link to={ROUTES.ABOUT} >About</Link>
+                    </li> */}
 
                     <li onClick={toggleActiveTab}>
                     <Link to={ROUTES.ABOUT} >Donate</Link>
