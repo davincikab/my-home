@@ -21,9 +21,10 @@ const Map = ReactMapboxGl({
 
 const MapboxDirections = window.MapboxDirections;
 const directionControl = new MapboxDirections({
-    styles:style,
+    // styles:style,
     unit: 'metric',
     accessToken:ACCESS_TOKEN,
+    profile:"mapbox/driving",
     interactive:false
 });
 
