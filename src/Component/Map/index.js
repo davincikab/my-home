@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from "react";
 
-import ReactMapboxGl, {Source, Layer, Popup, MapContext } from 'react-mapbox-gl';
-import { useLocation, Link } from 'react-router-dom';
+import ReactMapboxGl, {Source, Layer, Popup, GeoJSONLayer } from 'react-mapbox-gl';
+import { useLocation, Link, Route } from 'react-router-dom';
 
 import style from '../../assets/mapstyles';
 
 // firebase
 import { withFirebase } from '../Firebase';
 import './Map.css';
+
+import polyline from '../../utils/polyline';
 
 import FilterTab from "../FilterSection";
 import { GeolocateControl } from "mapbox-gl";
@@ -21,7 +23,7 @@ const Map = ReactMapboxGl({
 
 const MapboxDirections = window.MapboxDirections;
 const directionControl = new MapboxDirections({
-    // styles:style,
+    styles:style,
     unit: 'metric',
     accessToken:ACCESS_TOKEN,
     profile:"mapbox/driving",
@@ -49,6 +51,8 @@ function MapComponent(props) {
     const [isDirectionAdded, setIsDirectionAdded] = useState(false);
     const [activeHome, setActiveHome] = useState();
     const [destination, setDestination] = useState([]);
+    const [origin, setOrigin] = useState([]);
+    const [route, setRoute] = useState(null);
     const [userLocation, setUserLocation] = useState([]);
 
     let query = useQuery();
@@ -201,6 +205,31 @@ function MapComponent(props) {
             map.addControl(directionControl, 'top-right');
             setIsDirectionAdded(true);
 
+            directionControl.on("route", function(routes) {
+                console.log(routes);
+                routes = routes.route;
+                let features = routes.map(route => {
+                    let coordinates = polyline.decode(route.geometry);
+
+                    // console.log(coor)
+                    return {
+                        "type": "Feature",
+                        "geometry": {
+                          "type": "LineString",
+                          "coordinates": coordinates
+                        },
+                        "properties": {}
+                    }
+                });
+
+                console.log(features);
+                setRoute({
+                    'type':'FeatureCollection',
+                    'features':features
+                });
+                
+            });
+
             // geolocation
             geolocateControl.on('geolocate', function(position) {
                 console.log(position);
@@ -220,99 +249,125 @@ function MapComponent(props) {
         }
     };
 
+    console.log(route);
     return (
         <div className="container-fluid">
           <Map
-            style='mapbox://styles/mapbox/light-v10'
-            containerStyle={{
-                height: '90.3vh',
-                width: '100vw'
-            }}
-            center={center}
-            zoom={[zoom]}
-            onStyleImageMissing={onStyleImageMissing}
-            onClick={onMapClick}
-            onStyleLoad={addControl}
+                style='mapbox://styles/mapbox/light-v10'
+                containerStyle={{
+                    height: '90.3vh',
+                    width: '100vw'
+                }}
+                center={center}
+                zoom={[zoom]}
+                onStyleImageMissing={onStyleImageMissing}
+                onClick={onMapClick}
+                onStyleLoad={addControl}
             >
-            {
-                 homes.type &&
-                 <Source id="home-source" geoJsonSource={{
-                     type:"geojson",
-                     data:homes
-                 }} />
-            }
-            
-            {  
-                visualType === "symbol" && homes.type &&
-                <Layer 
-                    type="symbol" 
-                    id="homes" 
-                    layout={{ 'icon-image': "home"}}
-                    sourceId="home-source"
-                    onMouseEnter={onFeatureEnter}
-                    onMouseLeave={onFeatureLeave}
-                >
-                </Layer>
-            }
+                {
+                    route &&
+                    <Source id="route-source" geoJsonSource={{
+                        type:"geojson",
+                        data:route
+                    }} />
+                }
+                {
+                    homes.type &&
+                    <Source id="home-source" geoJsonSource={{
+                        type:"geojson",
+                        data:homes
+                    }} />
+                }
+                
+                {  
+                    visualType === "symbol" && homes.type &&
+                    <Layer 
+                        type="symbol" 
+                        id="homes" 
+                        layout={{ 'icon-image': "home"}}
+                        sourceId="home-source"
+                        onMouseEnter={onFeatureEnter}
+                        onMouseLeave={onFeatureLeave}
+                    >
+                    </Layer>
+                }
 
-            {   
-                visualField && visualType === "circle" &&
-                <Layer 
-                    type="circle" 
-                    id="homes" 
-                    sourceId="home-source"
-                    layout={{ 
-                        "visibility":"visible"
-                    }}
-                    paint={{
-                        'circle-radius':[
-                            'interpolate',
-                            ['linear'],
-                            ['get', visualField],
-                            10,
-                            5,
-                            200,
-                            20
-                        ],
-                        'circle-color':"#E5573D",
-                        'circle-opacity':0.75
-                    }}
-                    onMouseEnter={onFeatureEnter}
-                    onMouseLeave={onFeatureLeave}
-                >
-                </Layer>
-            }
+                {   
+                    visualField && visualType === "circle" &&
+                    <Layer 
+                        type="circle" 
+                        id="homes" 
+                        sourceId="home-source"
+                        layout={{ 
+                            "visibility":"visible"
+                        }}
+                        paint={{
+                            'circle-radius':[
+                                'interpolate',
+                                ['linear'],
+                                ['get', visualField],
+                                10,
+                                5,
+                                200,
+                                20
+                            ],
+                            'circle-color':"#E5573D",
+                            'circle-opacity':0.75
+                        }}
+                        onMouseEnter={onFeatureEnter}
+                        onMouseLeave={onFeatureLeave}
+                    >
+                    </Layer>
+                }
 
-            {
-                popupData.geometry &&
-                <Popup
-                    coordinates={popupData.geometry.coordinates}
-                    offset={{
-                        'bottom-left': [12, -38],  'bottom': [0, 0], 'bottom-right': [-12, -38]
-                    }}
-                >
-                    <PopupComponent popupData={popupData} setDestination={updateDestination} firebase={props.firebase}/>
-                </Popup>
-            }
-            {
-                activeHome &&
-                <Popup
-                    coordinates={activeHome.geometry.coordinates}
-                    offset={{
-                        'bottom-left': [12, -38],  'bottom': [0, 0], 'bottom-right': [-12, -38]
-                    }}
-                >
-                    <PopupComponent popupData={activeHome} setDestination={updateDestination} firebase={props.firebase}/>
-                </Popup>
-            }
+                {
+                    popupData.geometry &&
+                    <Popup
+                        coordinates={popupData.geometry.coordinates}
+                        offset={{
+                            'bottom-left': [12, -38],  'bottom': [0, 0], 'bottom-right': [-12, -38]
+                        }}
+                    >
+                        <PopupComponent popupData={popupData} setDestination={updateDestination} firebase={props.firebase}/>
+                    </Popup>
+                }
+                {
+                    activeHome &&
+                    <Popup
+                        coordinates={activeHome.geometry.coordinates}
+                        offset={{
+                            'bottom-left': [12, -38],  'bottom': [0, 0], 'bottom-right': [-12, -38]
+                        }}
+                    >
+                        <PopupComponent popupData={activeHome} setDestination={updateDestination} firebase={props.firebase}/>
+                    </Popup>
+                }
+                {
+                    route && 
+                    <Layer 
+                        type="line"
+                        id="route-layer" 
+                        sourceId="route-source"
+                        layout={{ 
+                            "visibility":"visible"
+                        }}
+                        paint={{
+                            'line-color': '#2d5f99',
+                            'line-width': 12
+                        }}
+                    />
+                }
 
-                <MapContext.Consumer>
-                    {(map) => {
-                        // use `map` here
-                        // addControl(map);
-                        
-                    }}
-                </MapContext.Consumer>
+                {
+                    route &&
+                    <GeoJSONLayer 
+                        data={route}
+                        linePaint={{
+                            'line-color': '#ff0000',
+                            'line-width': 12
+                        }}
+                    />
+                }
             </Map>
 
             {
