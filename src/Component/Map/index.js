@@ -164,9 +164,6 @@ function MapComponent(props) {
         } else {
             setPopupData({});
         }
-
-       
-        
     }
 
     const onFeatureEnter = (event) => {
@@ -181,12 +178,15 @@ function MapComponent(props) {
 
     const updateDestination = (coordinate) => {
         console.log(coordinate);
+        setActiveHome(null);
+        // setPopupData(null);
+
         setDestination(coordinate);
 
         if(userLocation[0]) {
             directionControl.setOrigin(userLocation);
         }
-       
+        
         directionControl.setDestination(coordinate);
     }
 
@@ -373,7 +373,7 @@ const PopupComponent = ({popupData, setDestination, firebase}) => {
                 />
 
                 <span className="mr-1">
-                    <Link to={`/about/${popupData.properties.name}/${popupData.properties.id}/`} >More info ...</Link>
+                    <Link to={`/my-home/about/${popupData.properties.name}/${popupData.properties.id}/`} >More info ...</Link>
                 </span>
             </div>
 

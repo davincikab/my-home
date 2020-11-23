@@ -25,7 +25,7 @@ const style = [{
   },
   'paint': {
     'line-color': '#2d5f99',
-    'line-width': 1
+    'line-width': 2
   },
   'filter': [
     'all',

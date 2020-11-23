@@ -25,7 +25,7 @@ class HomeComponent extends React.Component {
         console.log("Click: " + JSON.stringify(home));
 
         // redirect to map 
-        this.props.history.push("/map?home="+home.name+"&id="+home.id);
+        this.props.history.push("/my-home/map?home="+home.name+"&id="+home.id);
     }
 
     onTextChange = (e) => {

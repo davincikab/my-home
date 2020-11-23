@@ -21,7 +21,7 @@ class AboutComponent extends React.Component {
 
     componentDidMount() {
         const { params: { name, id} } = this.props.match;
-       
+        
         this.props.firebase.home(id).on("value", snapshot => {
             console.log(snapshot.val());
 
@@ -70,7 +70,7 @@ class AboutComponent extends React.Component {
                                     <div className="my-2">
                                         <p><b>SubCounty</b>{home['sub-county']}</p>
                                         <div className="mx-2">
-                                            <Link to={`/map?home=${home.name}&id=${home.id}`} >Map Location</Link>
+                                            <Link to={`/my-home/map?home=${home.name}&id=${home.id}`} >Map Location</Link>
                                         </div>
                                     </div>
 

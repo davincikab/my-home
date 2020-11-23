@@ -64,12 +64,8 @@ const Navigation = (props) => {
                     </li>
 
                     {/* <li onClick={toggleActiveTab}>
-                        <Link to={ROUTES.ABOUT} >About</Link>
+                        <Link to={ROUTES.ABOUT} >Donate</Link>
                     </li> */}
-
-                    <li onClick={toggleActiveTab}>
-                    <Link to={ROUTES.ABOUT} >Donate</Link>
-                    </li>
                     { authUser ? 
                         <NavigationAuth toggleActiveTab={toggleActiveTab} /> : 
                         <NavigationNonAuth toggleActiveTab={toggleActiveTab} /> 

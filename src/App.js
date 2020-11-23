@@ -57,6 +57,8 @@ const App = () => {
                 <Route path={ROUTES.PASSWORD_CHANGE} >
                   <PasswordChangePage />
                 </Route>
+
+                <Route path='*' exact={true} component={Home} />
           </Switch>
         </div>
       </Router>
@@ -65,18 +67,3 @@ const App = () => {
 
 
 export default withAuthentication(App);
-
-
-// var containerStyle = {
-//     position: 'absolute',
-//     zIndex: 10,
-//     boxShadow: '0px 1px 4px rgba(0, 0, 0, .3)',
-//     border: '1px solid rgba(0, 0, 0, 0.1)',
-//     right: 50,
-//     backgroundColor: '#fff',
-//     opacity: 0.85,
-//     display: 'flex',
-//     flexDirection: 'row',
-//     alignItems: 'baseline',
-//     padding: '3px 7px'
-// };
