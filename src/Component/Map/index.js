@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-import ReactMapboxGl, {Source, Layer, Popup, GeoJSONLayer } from 'react-mapbox-gl';
+import ReactMapboxGl, {Source, Layer, Popup, Marker } from 'react-mapbox-gl';
 import { useLocation, Link, Route } from 'react-router-dom';
 
 import style from '../../assets/mapstyles';
@@ -20,42 +20,6 @@ const ACCESS_TOKEN = 'pk.eyJ1IjoiZGF1ZGk5NyIsImEiOiJjanJtY3B1bjYwZ3F2NGFvOXZ1a29
 const Map = ReactMapboxGl({
     accessToken:ACCESS_TOKEN  
 });
-
-let ft = {
-    "type": "FeatureCollection",
-    "features": [
-      {
-        "type": "Feature",
-        "properties": {},
-        "geometry": {
-          "type": "LineString",
-          "coordinates": [
-            [
-              36.82057946920395,
-              -1.2925930456901766
-            ],
-            [
-              36.820713579654694,
-              -1.2926024310328463
-            ],
-            [
-              36.8207685649395,
-              -1.2925943864534097
-            ],
-            [
-              36.820834279060364,
-              -1.2925715934782056
-            ],
-            [
-              36.82091072201729,
-              -1.2925340521068396
-            ],
-          ]
-        }
-      }
-    ]
-};
-
 
 const MapboxDirections = window.MapboxDirections;
 const directionControl = new MapboxDirections({
@@ -222,10 +186,11 @@ function MapComponent(props) {
         setActiveHome(null);
         // setPopupData(null);
 
-        setDestination(coordinate);
+        // setDestination(coordinate);
 
         if(userLocation[0]) {
             directionControl.setOrigin(userLocation);
+            setOrigin(userLocation);
         }
         
         directionControl.setDestination(coordinate);
@@ -265,12 +230,29 @@ function MapComponent(props) {
                 setPopupData({});
 
                 // update route
-                // setRoute({
-                //     "type": "FeatureCollection",
-                //     "features":features
-                // });
-
+                setRoute({
+                    "type": "FeatureCollection",
+                    "features":features
+                });
                 
+            });
+
+            directionControl.on("clear", function(e) {
+                console.log(e);
+                setRoute({});
+                if(e.type == 'origin') {
+                    setOrigin([]);
+                } else {
+                    setDestination([]);
+                }
+            });
+
+            directionControl.on("origin", function(e) {
+                setOrigin(e.feature.geometry.coordinates);
+            });
+
+            directionControl.on("destination", function(e) {
+                setDestination(e.feature.geometry.coordinates);
             });
 
             // geolocation
@@ -385,6 +367,25 @@ function MapComponent(props) {
                         <PopupComponent popupData={activeHome} setDestination={updateDestination} firebase={props.firebase}/>
                     </Popup>
                 }
+
+                { origin[0] &&
+                    <Marker
+                        coordinates={origin}
+                        anchor="bottom"
+                    >
+                        <div className="marker-div">A</div>
+                    </Marker>
+                }
+
+                { destination[0] &&
+                    <Marker
+                        coordinates={destination}
+                        anchor="bottom"
+                    >
+                        <div className="marker-div marker-destination">B</div>
+                    </Marker>
+                }
+
                 {
                     route.type && 
                     <Layer 
@@ -400,17 +401,6 @@ function MapComponent(props) {
                         }}
                     />
                 }
-
-                {/* {
-                    route &&
-                    <GeoJSONLayer 
-                        data={route}
-                        linePaint={{
-                            'line-color': '#ff0000',
-                            'line-width': 12
-                        }}
-                    />
-                } */}
             </Map>
 
             {
