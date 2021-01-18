@@ -21,9 +21,45 @@ const Map = ReactMapboxGl({
     accessToken:ACCESS_TOKEN  
 });
 
+let ft = {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              36.82057946920395,
+              -1.2925930456901766
+            ],
+            [
+              36.820713579654694,
+              -1.2926024310328463
+            ],
+            [
+              36.8207685649395,
+              -1.2925943864534097
+            ],
+            [
+              36.820834279060364,
+              -1.2925715934782056
+            ],
+            [
+              36.82091072201729,
+              -1.2925340521068396
+            ],
+          ]
+        }
+      }
+    ]
+};
+
+
 const MapboxDirections = window.MapboxDirections;
 const directionControl = new MapboxDirections({
-    styles:style,
+    // styles:[style],
     unit: 'metric',
     accessToken:ACCESS_TOKEN,
     profile:"mapbox/driving",
@@ -52,7 +88,7 @@ function MapComponent(props) {
     const [activeHome, setActiveHome] = useState();
     const [destination, setDestination] = useState([]);
     const [origin, setOrigin] = useState([]);
-    const [route, setRoute] = useState(null);
+    const [route, setRoute] = useState({});
     const [userLocation, setUserLocation] = useState([]);
 
     let query = useQuery();
@@ -206,27 +242,34 @@ function MapComponent(props) {
             setIsDirectionAdded(true);
 
             directionControl.on("route", function(routes) {
-                console.log(routes);
+                // console.log(routes);
                 routes = routes.route;
                 let features = routes.map(route => {
                     let coordinates = polyline.decode(route.geometry);
 
-                    // console.log(coor)
+                    // console.log(coordinates);
+                    coordinates.forEach(coord => coord.reverse());
                     return {
                         "type": "Feature",
+                        "properties": {},
                         "geometry": {
-                          "type": "LineString",
-                          "coordinates": coordinates
-                        },
-                        "properties": {}
+                            "type": "LineString",
+                            "coordinates": coordinates
+                        }
                     }
                 });
 
                 console.log(features);
-                setRoute({
-                    'type':'FeatureCollection',
-                    'features':features
-                });
+
+                // update popup content
+                setPopupData({});
+
+                // update route
+                // setRoute({
+                //     "type": "FeatureCollection",
+                //     "features":features
+                // });
+
                 
             });
 
@@ -265,7 +308,7 @@ function MapComponent(props) {
                 onStyleLoad={addControl}
             >
                 {
-                    route &&
+                    route.type &&
                     <Source id="route-source" geoJsonSource={{
                         type:"geojson",
                         data:route
@@ -343,7 +386,7 @@ function MapComponent(props) {
                     </Popup>
                 }
                 {
-                    route && 
+                    route.type && 
                     <Layer 
                         type="line"
                         id="route-layer" 
@@ -353,12 +396,12 @@ function MapComponent(props) {
                         }}
                         paint={{
                             'line-color': '#2d5f99',
-                            'line-width': 12
+                            'line-width': 5
                         }}
                     />
                 }
 
-                {
+                {/* {
                     route &&
                     <GeoJSONLayer 
                         data={route}
@@ -367,7 +410,7 @@ function MapComponent(props) {
                             'line-width': 12
                         }}
                     />
-                }
+                } */}
             </Map>
 
             {
